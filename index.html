@@ -1,0 +1,4477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA | Premium Fitness & Wellness</title>
+  <meta name="description"
+    content="Embark on a luxury wellness journey with AURA. Futuristic training programs, custom bio-analytics, and organic nutrition guidance to unlock your ultimate self.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* ==========================================
+       DESIGN SYSTEM & VARIABLES
+       ========================================== */
+    :root {
+      --color-bg-dark: #0A1C14;
+      /* Deepest emerald black */
+      --color-bg-panel: #11281E;
+      /* Emerald panel */
+      --color-forest: #1F3F32;
+      /* Classic forest green */
+      --color-olive: #5C6838;
+      /* Organic olive green */
+      --color-sand: #E6C594;
+      /* Warm sands gold */
+      --color-orange: #E07A5F;
+      /* Premium soft orange */
+      --color-beige: #F4F1DE;
+      /* Rich cream/beige text */
+      --color-offwhite: #FAF9F6;
+      /* Off-white headings */
+      --color-charcoal: #1E2321;
+      /* Charcoal for glass card backs */
+
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      --transition-slow: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-medium: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-fast: all 0.2s ease;
+
+      --glass-bg: rgba(17, 40, 30, 0.55);
+      --glass-border: rgba(230, 197, 148, 0.12);
+      --glass-blur: blur(16px);
+
+      --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.3);
+      --shadow-glow: 0 0 20px rgba(230, 197, 148, 0.15);
+      --shadow-glow-orange: 0 0 25px rgba(224, 122, 95, 0.3);
+    }
+
+    /* ==========================================
+       RESET & BASE STYLES
+       ========================================== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--color-bg-dark);
+      color: var(--color-beige);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--font-heading);
+      color: var(--color-offwhite);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition-fast);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+      background: none;
+      border: none;
+      outline: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 7rem 0;
+      position: relative;
+    }
+
+    /* Scrollbar Style */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--color-bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-forest);
+      border-radius: 4px;
+      border: 1px solid var(--color-bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-olive);
+    }
+
+    /* ==========================================
+       UTILITIES & GLASSMORPHISM
+       ========================================== */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-premium);
+      transition: var(--transition-medium);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(230, 197, 148, 0.25);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      letter-spacing: 0.5px;
+      transition: var(--transition-medium);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      background: var(--color-orange);
+      color: var(--color-offwhite);
+      box-shadow: var(--shadow-glow-orange);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+      transition: 0.6s;
+      z-index: -1;
+    }
+
+    .btn-primary:hover::before {
+      transform: translateX(100%);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(224, 122, 95, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(250, 249, 246, 0.08);
+      border: 1px solid rgba(250, 249, 246, 0.15);
+      color: var(--color-offwhite);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(250, 249, 246, 0.15);
+      border-color: var(--color-sand);
+      transform: translateY(-3px);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-header .tag {
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      color: var(--color-sand);
+      margin-bottom: 1rem;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    .section-header h2 {
+      font-size: 2.75rem;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+    }
+
+    .section-header p {
+      max-width: 600px;
+      margin: 0 auto;
+      color: var(--color-beige);
+      opacity: 0.85;
+      font-size: 1.1rem;
+    }
+
+    /* ==========================================
+       KEYFRAMES & BACKGROUND ANIMATIONS
+       ========================================== */
+    @keyframes float {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-15px) rotate(3deg);
+      }
+
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 0 15px rgba(230, 197, 148, 0.1);
+      }
+
+      50% {
+        box-shadow: 0 0 30px rgba(230, 197, 148, 0.25);
+      }
+
+      100% {
+        box-shadow: 0 0 15px rgba(230, 197, 148, 0.1);
+      }
+    }
+
+    @keyframes rotateSlow {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes loaderSpin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Floating shapes */
+    .bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: -1;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .bg-shape-1 {
+      top: 10%;
+      left: 5%;
+      width: 400px;
+      height: 400px;
+      background: var(--color-forest);
+      animation: float 10s ease-in-out infinite;
+    }
+
+    .bg-shape-2 {
+      bottom: 20%;
+      right: 5%;
+      width: 500px;
+      height: 500px;
+      background: var(--color-olive);
+      animation: float 14s ease-in-out infinite alternate;
+    }
+
+    .bg-shape-3 {
+      top: 50%;
+      left: 30%;
+      width: 300px;
+      height: 300px;
+      background: var(--color-orange);
+      opacity: 0.08;
+      animation: float 12s ease-in-out infinite alternate-reverse;
+    }
+
+    /* ==========================================
+       PRELOADER / LOADING SCREEN
+       ========================================== */
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--color-bg-dark);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
+
+    #loader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-ring {
+      width: 80px;
+      height: 80px;
+      border: 3px solid rgba(230, 197, 148, 0.1);
+      border-radius: 50%;
+      border-top-color: var(--color-sand);
+      animation: loaderSpin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      margin-bottom: 2rem;
+    }
+
+    .loader-text {
+      font-family: var(--font-heading);
+      color: var(--color-offwhite);
+      font-size: 2rem;
+      letter-spacing: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* ==========================================
+       NAVIGATION BAR
+       ========================================== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: var(--transition-medium);
+      border-bottom: 1px solid transparent;
+    }
+
+    header.scrolled {
+      background: rgba(10, 28, 20, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 0.8rem 0;
+    }
+
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.75rem;
+      color: var(--color-offwhite);
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      color: var(--color-sand);
+    }
+
+    .logo-icon {
+      color: var(--color-orange);
+      animation: float 5s ease-in-out infinite;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      opacity: 0.8;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--color-orange);
+      transition: var(--transition-medium);
+    }
+
+    .nav-link:hover {
+      opacity: 1;
+      color: var(--color-offwhite);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    /* Hamburger Menu */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger {
+      width: 25px;
+      height: 2px;
+      background: var(--color-offwhite);
+      position: relative;
+      transition: var(--transition-fast);
+    }
+
+    .hamburger::before,
+    .hamburger::after {
+      content: '';
+      position: absolute;
+      width: 25px;
+      height: 2px;
+      background: var(--color-offwhite);
+      transition: var(--transition-fast);
+    }
+
+    .hamburger::before {
+      top: -8px;
+    }
+
+    .hamburger::after {
+      top: 8px;
+    }
+
+    /* Open Hamburger State */
+    .menu-toggle.active .hamburger {
+      background: transparent;
+    }
+
+    .menu-toggle.active .hamburger::before {
+      transform: rotate(45deg);
+      top: 0;
+    }
+
+    .menu-toggle.active .hamburger::after {
+      transform: rotate(-45deg);
+      top: 0;
+    }
+
+    /* ==========================================
+       HERO SECTION
+       ========================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 120px;
+      padding-bottom: 6px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-tag {
+      font-family: var(--font-heading);
+      background: rgba(230, 197, 148, 0.1);
+      border: 1px solid rgba(230, 197, 148, 0.2);
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      color: var(--color-sand);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 4.25rem;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .hero-content h1 span {
+      background: linear-gradient(to right, var(--color-offwhite), var(--color-sand));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: var(--color-beige);
+      opacity: 0.85;
+      margin-bottom: 2.5rem;
+      max-width: 550px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Stats Grid */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .stat-card {
+      background: rgba(250, 249, 246, 0.04);
+      border: 1px solid rgba(250, 249, 246, 0.06);
+      border-radius: 20px;
+      padding: 1.25rem;
+      text-align: center;
+      transition: var(--transition-medium);
+    }
+
+    .stat-card:hover {
+      border-color: rgba(230, 197, 148, 0.2);
+      background: rgba(250, 249, 246, 0.08);
+      transform: translateY(-5px);
+    }
+
+    .stat-val {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--color-offwhite);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    .stat-val span {
+      color: var(--color-orange);
+    }
+
+    .stat-lbl {
+      font-size: 0.8rem;
+      color: var(--color-beige);
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Hero Right visual */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-blob {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(31, 63, 50, 0.4) 0%, rgba(92, 104, 56, 0.2) 100%);
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      filter: blur(10px);
+      z-index: -1;
+      animation: rotateSlow 20s linear infinite;
+    }
+
+    .hero-img-wrapper {
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-img-wrapper img {
+      border-radius: 32px;
+      box-shadow: var(--shadow-premium), 0 0 40px rgba(31, 63, 50, 0.5);
+      border: 1px solid rgba(230, 197, 148, 0.15);
+      transform: perspective(1000px) rotateY(-5deg);
+      transition: var(--transition-slow);
+    }
+
+    .hero-img-wrapper img:hover {
+      transform: perspective(1000px) rotateY(0deg) scale(1.02);
+      border-color: rgba(230, 197, 148, 0.3);
+    }
+
+    /* Floating visual cards */
+    .floating-badge {
+      position: absolute;
+      background: rgba(17, 40, 30, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(230, 197, 148, 0.2);
+      border-radius: 16px;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: var(--shadow-premium);
+      z-index: 10;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .badge-1 {
+      top: 15%;
+      left: -10%;
+      animation-delay: 0.5s;
+    }
+
+    .badge-2 {
+      bottom: 15%;
+      right: -5%;
+      animation-delay: 1.5s;
+    }
+
+    .badge-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(224, 122, 95, 0.15);
+      color: var(--color-orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge-txt {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .badge-num {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-offwhite);
+    }
+
+    .badge-label {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    /* ==========================================
+       ABOUT SECTION
+       ========================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-bottom: 6rem;
+    }
+
+    .about-txt-content h3 {
+      font-size: 2.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-txt-content p {
+      margin-bottom: 1.5rem;
+      opacity: 0.85;
+      font-size: 1.05rem;
+    }
+
+    .about-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .about-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .about-bullets li i {
+      color: var(--color-orange);
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+    }
+
+    .about-bullets span {
+      font-weight: 600;
+      color: var(--color-offwhite);
+    }
+
+    .about-visual-creative {
+      position: relative;
+      padding: 2rem;
+    }
+
+    .creative-ring {
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      width: 90%;
+      height: 90%;
+      border: 2px dashed rgba(230, 197, 148, 0.15);
+      border-radius: 50%;
+      animation: rotateSlow 30s linear infinite;
+      z-index: -1;
+    }
+
+    .creative-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-radius: 28px;
+      padding: 3rem;
+      box-shadow: var(--shadow-premium);
+      text-align: center;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .creative-card i {
+      color: var(--color-sand);
+      margin-bottom: 1.5rem;
+      transform: scale(1.5);
+      display: inline-block;
+    }
+
+    .creative-card h4 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .creative-card p {
+      font-size: 0.95rem;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    /* About Feature Cards Grid */
+    .about-features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-radius: 24px;
+    }
+
+    .feature-icon-wrapper {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(92, 104, 56, 0.15);
+      border: 1px solid rgba(92, 104, 56, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      color: var(--color-sand);
+      transition: var(--transition-medium);
+    }
+
+    .feature-card:hover .feature-icon-wrapper {
+      background: var(--color-orange);
+      border-color: var(--color-orange);
+      color: var(--color-offwhite);
+      transform: rotateY(180deg);
+    }
+
+    .feature-card h4 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* ==========================================
+       WORKOUT PROGRAMS
+       ========================================== */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    /* Layout override to make Strength and Cardio span 1.5 columns if wanted, or just standard 3 columns with interesting heights */
+    .program-card {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      box-shadow: var(--shadow-premium);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border: 1px solid rgba(250, 249, 246, 0.08);
+      transition: var(--transition-slow);
+    }
+
+    .program-card img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-slow);
+      z-index: 1;
+    }
+
+    .program-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(10, 28, 20, 0.95) 15%, rgba(10, 28, 20, 0.4) 60%, transparent 100%);
+      z-index: 2;
+      transition: var(--transition-medium);
+    }
+
+    .program-content {
+      position: relative;
+      z-index: 3;
+      padding: 2.5rem;
+      transform: translateY(40px);
+      transition: var(--transition-medium);
+    }
+
+    .program-tag {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--color-sand);
+      margin-bottom: 0.75rem;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    .program-card h3 {
+      font-size: 1.75rem;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    .program-desc {
+      font-size: 0.9rem;
+      color: var(--color-beige);
+      opacity: 0;
+      margin-bottom: 1.5rem;
+      transition: var(--transition-medium);
+    }
+
+    .program-explore {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--color-orange);
+      font-weight: 600;
+      font-size: 0.95rem;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: var(--transition-medium);
+    }
+
+    /* Hover interactions */
+    .program-card:hover {
+      border-color: rgba(230, 197, 148, 0.25);
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .program-card:hover img {
+      transform: scale(1.08) rotate(1deg);
+    }
+
+    .program-card:hover .program-overlay {
+      background: linear-gradient(to top, rgba(10, 28, 20, 0.98) 25%, rgba(10, 28, 20, 0.6) 70%, rgba(10, 28, 20, 0.2) 100%);
+    }
+
+    .program-card:hover .program-content {
+      transform: translateY(0);
+    }
+
+    .program-card:hover .program-desc {
+      opacity: 0.85;
+    }
+
+    .program-card:hover .program-explore {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Make grid grid elements taller or wider for asymmetric styling */
+    .program-card-wide {
+      grid-column: span 2;
+      aspect-ratio: 8 / 5;
+    }
+
+    /* ==========================================
+       BMI CALCULATOR SECTION
+       ========================================== */
+    .bmi-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .bmi-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 3.5rem;
+      box-shadow: var(--shadow-premium);
+    }
+
+    .bmi-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .bmi-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .bmi-input-group label {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--color-offwhite);
+      letter-spacing: 0.5px;
+    }
+
+    .bmi-input-wrapper {
+      position: relative;
+      background: rgba(250, 249, 246, 0.05);
+      border: 1px solid rgba(250, 249, 246, 0.1);
+      border-radius: 14px;
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+    }
+
+    .bmi-input-wrapper:focus-within {
+      border-color: var(--color-sand);
+      background: rgba(250, 249, 246, 0.08);
+    }
+
+    .bmi-input-wrapper input {
+      width: 100%;
+      padding: 1.2rem 3rem 1.2rem 1.5rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-offwhite);
+    }
+
+    .bmi-unit {
+      position: absolute;
+      right: 1.5rem;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      color: var(--color-sand);
+      font-size: 0.9rem;
+    }
+
+    /* Result Panel Styling */
+    .bmi-output-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      border-radius: 24px;
+      background: rgba(10, 28, 20, 0.4);
+      border: 1px dashed rgba(230, 197, 148, 0.15);
+      height: 100%;
+      justify-content: center;
+    }
+
+    .bmi-gauge-box {
+      position: relative;
+      width: 220px;
+      height: 110px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .bmi-gauge-track {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 16px solid;
+      border-color: #e0e0e0 #e0e0e0 transparent transparent;
+      transform: rotate(-135deg);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .bmi-gauge-fill {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 16px solid transparent;
+      border-top-color: var(--color-orange);
+      border-right-color: var(--color-orange);
+      transform: rotate(-135deg);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bmi-gauge-needle {
+      position: absolute;
+      width: 4px;
+      height: 95px;
+      background: var(--color-sand);
+      bottom: 0;
+      left: calc(50% - 2px);
+      transform-origin: bottom center;
+      transform: rotate(-90deg);
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 4px;
+    }
+
+    .bmi-gauge-center {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: var(--color-sand);
+      border-radius: 50%;
+      bottom: -8px;
+      left: calc(50% - 8px);
+      border: 3px solid var(--color-bg-panel);
+    }
+
+    .bmi-num-display {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--color-offwhite);
+      margin-bottom: 0.5rem;
+    }
+
+    .bmi-status-badge {
+      font-family: var(--font-heading);
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      background: rgba(250, 249, 246, 0.08);
+      color: var(--color-sand);
+    }
+
+    .bmi-msg {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      max-width: 280px;
+    }
+
+    /* Indicator marker labels */
+    .bmi-scale-markers {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.5rem 1rem 0;
+      font-size: 0.75rem;
+      opacity: 0.5;
+      border-top: 1px solid rgba(250, 249, 246, 0.06);
+      margin-top: 1rem;
+    }
+
+    /* ==========================================
+       DIET & NUTRITION
+       ========================================== */
+    .diet-slider-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      border-radius: 28px;
+      box-shadow: var(--shadow-premium);
+    }
+
+    .diet-wrapper {
+      display: flex;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .diet-slide {
+      min-width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      padding: 4rem;
+      border-radius: 28px;
+    }
+
+    .diet-visual {
+      position: relative;
+    }
+
+    .diet-visual img {
+      border-radius: 24px;
+      box-shadow: var(--shadow-premium);
+      border: 1px solid rgba(230, 197, 148, 0.15);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .diet-info h3 {
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .diet-tag {
+      color: var(--color-orange);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .diet-desc {
+      opacity: 0.85;
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+
+    .diet-macros {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .macro-box {
+      background: rgba(250, 249, 246, 0.04);
+      border: 1px solid rgba(250, 249, 246, 0.08);
+      border-radius: 16px;
+      padding: 1rem 0.5rem;
+      text-align: center;
+    }
+
+    .macro-val {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-offwhite);
+    }
+
+    .macro-lbl {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 0.25rem;
+    }
+
+    .diet-tips {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .diet-tips li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .diet-tips li i {
+      color: var(--color-sand);
+      font-size: 1rem;
+    }
+
+    /* Slider Arrows */
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(17, 40, 30, 0.8);
+      border: 1px solid rgba(230, 197, 148, 0.2);
+      color: var(--color-offwhite);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: var(--transition-medium);
+    }
+
+    .slider-arrow:hover {
+      background: var(--color-orange);
+      border-color: var(--color-orange);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .arrow-left {
+      left: 1.5rem;
+    }
+
+    .arrow-right {
+      right: 1.5rem;
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .slider-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(250, 249, 246, 0.2);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .slider-dot.active {
+      background: var(--color-orange);
+      transform: scale(1.3);
+    }
+
+    /* ==========================================
+       FITNESS TRACKER DASHBOARD
+       ========================================== */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .dashboard-widgets {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .widget-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .widget {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: var(--shadow-premium);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .widget-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .widget-icon {
+      color: var(--color-sand);
+    }
+
+    /* Water Widget */
+    .water-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .water-glass-container {
+      position: relative;
+      width: 50px;
+      height: 80px;
+      border: 3px solid var(--color-beige);
+      border-top: none;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      overflow: hidden;
+    }
+
+    .water-fluid {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: rgba(130, 200, 250, 0.7);
+      transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 10px rgba(130, 200, 250, 0.4) inset;
+    }
+
+    .water-stats {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .water-qty {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: var(--color-offwhite);
+    }
+
+    .water-goal {
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+
+    .water-controls {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(250, 249, 246, 0.05);
+      border: 1px solid rgba(250, 249, 246, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      color: var(--color-offwhite);
+    }
+
+    .btn-circle:hover {
+      background: var(--color-orange);
+      border-color: var(--color-orange);
+      transform: scale(1.05);
+    }
+
+    /* Sleep Widget */
+    .sleep-gauge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .sleep-qty {
+      font-family: var(--font-heading);
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: var(--color-offwhite);
+      margin-bottom: 0.25rem;
+    }
+
+    .sleep-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(250, 249, 246, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 1rem 0 1.2rem;
+    }
+
+    .sleep-fill {
+      height: 100%;
+      width: 75%;
+      background: linear-gradient(to right, var(--color-olive), var(--color-sand));
+      border-radius: 10px;
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sleep-lbl {
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+
+    /* Calorie Progress Ring Widget */
+    .calorie-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .calorie-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .calorie-burn {
+      font-family: var(--font-heading);
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--color-offwhite);
+    }
+
+    .calorie-ring-wrapper {
+      position: relative;
+      width: 90px;
+      height: 90px;
+    }
+
+    .calorie-svg-ring {
+      transform: rotate(-90deg);
+    }
+
+    .calorie-bg-circle {
+      fill: none;
+      stroke: rgba(250, 249, 246, 0.08);
+      stroke-width: 8;
+    }
+
+    .calorie-active-circle {
+      fill: none;
+      stroke: var(--color-orange);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 220;
+      stroke-dashoffset: 66;
+      /* 70% progress */
+      transition: stroke-dashoffset 0.8s ease;
+    }
+
+    .calorie-ring-val {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-offwhite);
+    }
+
+    /* Chart Panel */
+    .dashboard-chart-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-premium);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .legend-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .legend-orange {
+      background: var(--color-orange);
+    }
+
+    .legend-sand {
+      background: var(--color-sand);
+    }
+
+    .chart-container {
+      position: relative;
+      flex-grow: 1;
+      width: 100%;
+      height: 300px;
+    }
+
+    /* ==========================================
+       TESTIMONIALS SECTION
+       ========================================== */
+    .testimonials-carousel {
+      max-width: 850px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonials-wrapper {
+      display: flex;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .testimonial-slide {
+      min-width: 100%;
+      padding: 3rem;
+      text-align: center;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      box-shadow: var(--shadow-premium);
+    }
+
+    .testimonial-quote {
+      font-size: 1.35rem;
+      font-style: italic;
+      color: var(--color-offwhite);
+      margin-bottom: 2rem;
+      position: relative;
+      line-height: 1.7;
+    }
+
+    .testimonial-quote::before,
+    .testimonial-quote::after {
+      font-family: var(--font-heading);
+      font-size: 4rem;
+      color: var(--color-sand);
+      opacity: 0.15;
+      position: absolute;
+      height: 30px;
+      line-height: 1;
+    }
+
+    .testimonial-quote::before {
+      content: '“';
+      left: -20px;
+      top: -30px;
+    }
+
+    .testimonial-quote::after {
+      content: '”';
+      right: -20px;
+      bottom: -10px;
+    }
+
+    .testimonial-user {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .testimonial-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--color-sand);
+      box-shadow: 0 0 15px rgba(230, 197, 148, 0.3);
+      padding: 3px;
+      background: var(--color-bg-dark);
+      object-fit: cover;
+    }
+
+    .testimonial-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-offwhite);
+    }
+
+    .testimonial-role {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    /* ==========================================
+       TRAINERS SECTION
+       ========================================== */
+    .trainers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .trainer-card {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow-premium);
+      border: 1px solid rgba(250, 249, 246, 0.08);
+      background: var(--color-bg-panel);
+      transition: var(--transition-slow);
+    }
+
+    .trainer-img-box {
+      width: 100%;
+      aspect-ratio: 1 / 1.15;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .trainer-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-slow);
+    }
+
+    .trainer-social-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 28, 20, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      transition: var(--transition-medium);
+      z-index: 5;
+    }
+
+    .social-icon-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-orange);
+      color: var(--color-offwhite);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-medium);
+      transform: translateY(20px);
+    }
+
+    .social-icon-btn:hover {
+      background: var(--color-sand);
+      color: var(--color-bg-dark);
+      transform: scale(1.1);
+    }
+
+    .trainer-info {
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      background: var(--color-bg-panel);
+      z-index: 10;
+    }
+
+    .trainer-role {
+      font-family: var(--font-heading);
+      color: var(--color-sand);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .trainer-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .trainer-tagline {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    /* Trainer Hover effects */
+    .trainer-card:hover {
+      border-color: rgba(230, 197, 148, 0.25);
+      transform: translateY(-8px);
+    }
+
+    .trainer-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .trainer-card:hover .trainer-social-overlay {
+      opacity: 1;
+    }
+
+    .trainer-card:hover .social-icon-btn {
+      transform: translateY(0);
+    }
+
+    /* ==========================================
+       PRICING SECTION
+       ========================================== */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      align-items: stretch;
+    }
+
+    .pricing-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: var(--shadow-premium);
+      transition: var(--transition-slow);
+    }
+
+    /* Most Popular Badge */
+    .popular-badge {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--color-orange);
+      color: var(--color-offwhite);
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      box-shadow: var(--shadow-glow-orange);
+      animation: float 4s ease-in-out infinite alternate;
+    }
+
+    .pricing-card.premium-glow {
+      border-color: rgba(230, 197, 148, 0.35);
+      background: linear-gradient(185deg, rgba(31, 63, 50, 0.6) 0%, rgba(10, 28, 20, 0.75) 100%);
+      transform: scale(1.03);
+    }
+
+    .pricing-card.premium-glow::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--color-orange), var(--color-sand));
+      z-index: -2;
+      opacity: 0.15;
+    }
+
+    .pricing-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--color-offwhite);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .pricing-price {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--color-offwhite);
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+
+    .pricing-price span {
+      font-size: 1rem;
+      font-weight: 500;
+      opacity: 0.6;
+    }
+
+    .pricing-period {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      margin-bottom: 2.5rem;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+      text-align: left;
+      flex-grow: 1;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .pricing-features li.disabled {
+      opacity: 0.4;
+      text-decoration: line-through;
+    }
+
+    .pricing-features li i {
+      color: var(--color-sand);
+      flex-shrink: 0;
+    }
+
+    .pricing-features li.disabled i {
+      color: var(--color-beige);
+      opacity: 0.5;
+    }
+
+    .pricing-btn {
+      width: 100%;
+    }
+
+    /* Hover Glow interaction */
+    .pricing-card:hover {
+      border-color: rgba(230, 197, 148, 0.4);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ==========================================
+       FAQ (ACCORDION) SECTION
+       ========================================== */
+    .faq-layout {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .faq-item {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: var(--transition-medium);
+    }
+
+    .faq-item:hover {
+      border-color: rgba(230, 197, 148, 0.25);
+    }
+
+    .faq-question {
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--color-offwhite);
+      transition: var(--transition-fast);
+      user-select: none;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .faq-answer-inner {
+      padding: 0 2rem 1.5rem;
+      font-size: 0.95rem;
+      opacity: 0.85;
+      line-height: 1.7;
+    }
+
+    .faq-icon {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      color: var(--color-sand);
+    }
+
+    /* Active Accordion State */
+    .faq-item.active {
+      border-color: rgba(230, 197, 148, 0.3);
+      background: rgba(17, 40, 30, 0.8);
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+      color: var(--color-orange);
+    }
+
+    /* ==========================================
+       CONTACT SECTION
+       ========================================== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .contact-info-panel h3 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-info-panel p {
+      opacity: 0.85;
+      font-size: 1.05rem;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .contact-detail-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(230, 197, 148, 0.1);
+      border: 1px solid rgba(230, 197, 148, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-sand);
+    }
+
+    .contact-detail-txt h5 {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .contact-detail-txt p {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-offwhite);
+    }
+
+    .map-placeholder {
+      height: 200px;
+      background: linear-gradient(135deg, rgba(31, 63, 50, 0.3) 0%, rgba(10, 28, 20, 0.6) 100%);
+      border: 1px dashed rgba(230, 197, 148, 0.2);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--color-sand);
+      opacity: 0.8;
+      box-shadow: var(--shadow-premium);
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 3.5rem;
+      box-shadow: var(--shadow-premium);
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+      color: var(--color-offwhite);
+      letter-spacing: 0.5px;
+    }
+
+    .form-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-input-wrapper i {
+      position: absolute;
+      left: 1.25rem;
+      color: var(--color-sand);
+      opacity: 0.7;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 1.1rem 1.5rem 1.1rem 3.2rem;
+      background: rgba(250, 249, 246, 0.04);
+      border: 1px solid rgba(250, 249, 246, 0.08);
+      border-radius: 14px;
+      color: var(--color-offwhite);
+      font-size: 1rem;
+      transition: var(--transition-fast);
+    }
+
+    .contact-form textarea {
+      padding-left: 1.5rem;
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--color-orange);
+      background: rgba(250, 249, 246, 0.08);
+    }
+
+    /* Form Validation styles */
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: #E63946;
+      background: rgba(230, 57, 70, 0.03);
+    }
+
+    .error-msg {
+      position: absolute;
+      bottom: -1.4rem;
+      left: 0.25rem;
+      font-size: 0.75rem;
+      color: #E63946;
+      font-weight: 500;
+      opacity: 0;
+      transition: var(--transition-fast);
+    }
+
+    .form-group.error .error-msg {
+      opacity: 1;
+    }
+
+    .submit-btn {
+      width: 100%;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--color-forest);
+      border: 1px solid var(--color-sand);
+      color: var(--color-offwhite);
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow-premium);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ==========================================
+       MULTI-COLUMN FOOTER
+       ========================================== */
+    footer {
+      background: linear-gradient(to bottom, var(--color-bg-dark) 0%, #06100B 100%);
+      border-top: 1px solid var(--glass-border);
+      padding: 6rem 0 2rem;
+      position: relative;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+    }
+
+    .footer-col-about {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .footer-col-about p {
+      opacity: 0.75;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .footer-social-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .footer-social-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-offwhite);
+      transition: transform 0.28s cubic-bezier(.2, .9, .2, 1), box-shadow 0.28s, opacity 0.2s;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(6px);
+    }
+
+    .footer-social-btn svg {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      color: var(--color-offwhite);
+    }
+
+    .footer-social-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(224, 122, 95, 0.12);
+    }
+
+    /* Brand gradients for each icon */
+    .footer-social-links a:nth-child(1) {
+      background: linear-gradient(135deg, #F58529, #DD2A7B);
+    }
+
+    .footer-social-links a:nth-child(2) {
+      background: linear-gradient(135deg, #1DA1F2, #0d8ddb);
+    }
+
+    .footer-social-links a:nth-child(3) {
+      background: linear-gradient(135deg, #FF0000, #C4302B);
+    }
+
+    .footer-social-links a:nth-child(4) {
+      background: linear-gradient(135deg, #0A66C2, #03498f);
+    }
+
+    .footer-social-btn:hover {
+      transform: translateY(-6px) scale(1.04);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5), 0 0 28px rgba(224, 122, 95, 0.08);
+      opacity: 1;
+    }
+
+    .footer-social-links a:nth-child(1):hover i {
+      filter: drop-shadow(0 4px 8px rgba(221, 42, 123, 0.25));
+    }
+
+    .footer-social-links a:nth-child(2):hover i {
+      filter: drop-shadow(0 4px 8px rgba(29, 161, 242, 0.22));
+    }
+
+    .footer-social-links a:nth-child(3):hover i {
+      filter: drop-shadow(0 4px 8px rgba(255, 0, 0, 0.22));
+    }
+
+    .footer-social-links a:nth-child(4):hover i {
+      filter: drop-shadow(0 4px 8px rgba(10, 102, 194, 0.22));
+    }
+
+    .footer-col h4 {
+      font-size: 1.15rem;
+      margin-bottom: 1.75rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background-color: var(--color-sand);
+    }
+
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-links-list a {
+      font-size: 0.95rem;
+      opacity: 0.75;
+    }
+
+    .footer-links-list a:hover {
+      opacity: 1;
+      color: var(--color-sand);
+      padding-left: 5px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .newsletter-form p {
+      font-size: 0.9rem;
+      opacity: 0.75;
+    }
+
+    .newsletter-input-box {
+      display: flex;
+      border: 1px solid rgba(250, 249, 246, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(250, 249, 246, 0.04);
+      transition: var(--transition-fast);
+    }
+
+    .newsletter-input-box:focus-within {
+      border-color: var(--color-sand);
+    }
+
+    .newsletter-input-box input {
+      flex-grow: 1;
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    .newsletter-submit {
+      background: var(--color-orange);
+      color: var(--color-offwhite);
+      padding: 0 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-fast);
+    }
+
+    .newsletter-submit:hover {
+      background: var(--color-sand);
+      color: var(--color-bg-dark);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(250, 249, 246, 0.08);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-bottom p {
+      font-size: 0.85rem;
+      opacity: 0.6;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-bottom-links a {
+      font-size: 0.85rem;
+      opacity: 0.6;
+    }
+
+    .footer-bottom-links a:hover {
+      opacity: 1;
+      color: var(--color-sand);
+    }
+
+    /* Scroll To Top Button */
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--color-orange);
+      color: var(--color-offwhite);
+      border: 1px solid rgba(250, 249, 246, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: var(--transition-medium);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .scroll-top-btn.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .scroll-top-btn:hover {
+      background: var(--color-sand);
+      color: var(--color-bg-dark);
+      transform: scale(1.05);
+    }
+
+    /* ==========================================
+       SCROLL REVEAL ANIMATIONS
+       ========================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger reveals */
+    .reveal-delay-1 {
+      transition-delay: 0.15s;
+    }
+
+    .reveal-delay-2 {
+      transition-delay: 0.3s;
+    }
+
+    .reveal-delay-3 {
+      transition-delay: 0.45s;
+    }
+
+    /* ==========================================
+       MOBILE RESPONSIVENESS
+       ========================================== */
+    @media (max-width: 1024px) {
+      html {
+        font-size: 15px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 5rem;
+        text-align: center;
+      }
+
+      .hero-content {
+        align-items: center;
+      }
+
+      .hero-ctas {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        max-width: 600px;
+      }
+
+      .hero-visual {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+
+      .about-features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .programs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .program-card-wide {
+        grid-column: span 1;
+        aspect-ratio: 4 / 5;
+      }
+
+      .bmi-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .diet-slide {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 3rem;
+      }
+
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+      }
+
+      .trainers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+        gap: 3rem;
+      }
+
+      .pricing-card.premium-glow {
+        transform: scale(1);
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 300px;
+        height: 100vh;
+        background: var(--color-bg-panel);
+        border-left: 1px solid var(--glass-border);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        z-index: 999;
+        transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      nav.open {
+        right: 0;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        font-size: 1.25rem;
+      }
+
+      .hero-content h1 {
+        font-size: 3.25rem;
+      }
+
+      .about-features {
+        grid-template-columns: 1fr;
+      }
+
+      .programs-grid {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+        margin: 0 auto;
+      }
+
+      .trainers-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .bmi-form {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==========================================
+       1. PRELOADER
+       ========================================== -->
+  <div id="loader">
+    <div class="loader-ring"></div>
+    <div class="loader-text">AURA</div>
+  </div>
+
+  <!-- Background Animated Shapes -->
+  <div class="bg-shape bg-shape-1"></div>
+  <div class="bg-shape bg-shape-2"></div>
+  <div class="bg-shape bg-shape-3"></div>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
+  <!-- ==========================================
+       2. NAVIGATION BAR
+       ========================================== -->
+  <header id="header">
+    <div class="container">
+      <a href="#hero" class="logo">
+        <i data-lucide="compass" class="logo-icon"></i>
+        AURA<span>.</span>
+      </a>
+
+      <nav id="nav">
+        <ul class="nav-links">
+          <li><a href="#hero" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#programs" class="nav-link">Programs</a></li>
+          <li><a href="#tracker" class="nav-link">Tracker</a></li>
+          <li><a href="#trainers" class="nav-link">Coaches</a></li>
+          <li><a href="#pricing" class="nav-link">Plans</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <a href="#pricing" class="btn btn-primary nav-btn">Join Now</a>
+      </nav>
+
+      <div class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <div class="hamburger"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       3. HERO SECTION
+       ========================================== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content reveal">
+          <span class="hero-tag">Revitalize Your Essence</span>
+          <h1>Reshape Your Body, <br><span>Refine Your Mind.</span></h1>
+          <p>Unveil a luxury wellness experience designed for the modern lifestyle. Combine premium coaching, biological
+            analytics, and organic meal structures into one seamless transformational loop.</p>
+          <div class="hero-ctas">
+            <a href="#programs" class="btn btn-primary">Start Your Journey</a>
+            <a href="#about" class="btn btn-secondary">Learn More</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-card">
+              <div class="stat-val" id="activeUsersVal">0<span>k+</span></div>
+              <div class="stat-lbl">Active Users</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-val" id="workoutHoursVal">0<span>h+</span></div>
+              <div class="stat-lbl">Workout Tracked</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-val" id="caloriesBurnedVal">0<span>M</span></div>
+              <div class="stat-lbl">Calories Burned</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal reveal-delay-2">
+          <div class="hero-blob"></div>
+
+          <!-- Floating Badge 1 -->
+          <div class="floating-badge badge-1">
+            <div class="badge-icon">
+              <i data-lucide="flame"></i>
+            </div>
+            <div class="badge-txt">
+              <span class="badge-num">650 kcal</span>
+              <span class="badge-label">Active Burn</span>
+            </div>
+          </div>
+
+          <div class="hero-img-wrapper">
+            <img src="assets/hero_fitness.png" alt="AURA 3D Fitness Concept" width="480" height="480">
+          </div>
+
+          <!-- Floating Badge 2 -->
+          <div class="floating-badge badge-2">
+            <div class="badge-icon" style="background: rgba(92, 104, 56, 0.15); color: var(--color-sand);">
+              <i data-lucide="heart"></i>
+            </div>
+            <div class="badge-txt">
+              <span class="badge-num">120 bpm</span>
+              <span class="badge-label">Average HR</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       4. ABOUT SECTION
+       ========================================== -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual-creative reveal">
+          <div class="creative-ring"></div>
+          <div class="creative-card">
+            <i data-lucide="leaf"></i>
+            <h4>Our Wellness Creed</h4>
+            <p>We believe that health is not a chore, but the ultimate expression of luxury. Every drop of sweat is an
+              investment, and every meal is nourishment. We design micro-habits that align natural energies with active
+              performance.</p>
+          </div>
+        </div>
+
+        <div class="about-txt-content reveal reveal-delay-2">
+          <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+            <span class="tag">Who We Are</span>
+            <h2>We Align Body & Nature</h2>
+          </div>
+          <p>AURA bridges the gap between biological metrics and real-world fitness. We don’t just track metrics; we
+            curate a custom ecosystem designed to elevate your physical limits without overloading your mental capacity.
+          </p>
+          <ul class="about-bullets">
+            <li>
+              <i data-lucide="check-circle-2"></i>
+              <div>
+                <span>Custom-Crafted Bio-Rhythms:</span> Workouts that automatically adapt to your energy, stress
+                levels, and historical data.
+              </div>
+            </li>
+            <li>
+              <i data-lucide="check-circle-2"></i>
+              <div>
+                <span>Organic Gastronomy:</span> Nutritional meal frameworks designed by top chefs and calibrated by
+                certified nutrition experts.
+              </div>
+            </li>
+            <li>
+              <i data-lucide="check-circle-2"></i>
+              <div>
+                <span>Omnipresent AI Guidance:</span> A 24/7 digital assistant tracking recovery cycles and calculating
+                exertion targets.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature Card Grid -->
+      <div class="about-features">
+        <div class="feature-card glass-card reveal">
+          <div class="feature-icon-wrapper">
+            <i data-lucide="activity"></i>
+          </div>
+          <h4>Workout Tracking</h4>
+          <p>Seamlessly catalog exercises, sets, reps, and heart rate thresholds through intuitive telemetry.</p>
+        </div>
+
+        <div class="feature-card glass-card reveal reveal-delay-1">
+          <div class="feature-icon-wrapper">
+            <i data-lucide="apple"></i>
+          </div>
+          <h4>Nutrition Guidance</h4>
+          <p>Clean macronutrient formulas and seasonal ingredients curated for sustainable physical performance.</p>
+        </div>
+
+        <div class="feature-card glass-card reveal reveal-delay-2">
+          <div class="feature-icon-wrapper">
+            <i data-lucide="trending-up"></i>
+          </div>
+          <h4>Progress Analytics</h4>
+          <p>Stunning multi-dimensional visualizations showing changes in body composition and baseline recovery rate.
+          </p>
+        </div>
+
+        <div class="feature-card glass-card reveal reveal-delay-3">
+          <div class="feature-icon-wrapper">
+            <i data-lucide="cpu"></i>
+          </div>
+          <h4>AI Fitness Coach</h4>
+          <p>Predictive learning models recommending optimal training intensity based on biometric feed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       5. WORKOUT PROGRAMS SECTION
+       ========================================== -->
+  <section class="programs" id="programs">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">Curated Disciplines</span>
+        <h2>Select Your Focus</h2>
+        <p>Explore elite workout pathways tailored to unlock deep power, flexibility, or high-intensity endurance.</p>
+      </div>
+
+      <div class="programs-grid">
+        <!-- Card 1 (Strength Training) - Wide card -->
+        <div class="program-card program-card-wide reveal">
+          <img src="assets/strength.png" alt="3D Strength training dumbbells">
+          <div class="program-overlay"></div>
+          <div class="program-content">
+            <span class="program-tag">Hypertrophy & Power</span>
+            <h3>Strength Training</h3>
+            <p class="program-desc">Forge resilient muscles and dense skeletal structures. Utilize precise progressive
+              overload strategies designed for pure metabolic and physical capacity expansion.</p>
+            <a href="#contact" class="program-explore">Explore Pathway <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Card 2 (Cardio) -->
+        <div class="program-card reveal reveal-delay-1">
+          <img src="assets/cardio.png" alt="3D Cardio smartwatch and shoes">
+          <div class="program-overlay"></div>
+          <div class="program-content">
+            <span class="program-tag">Vascular Health</span>
+            <h3>Aerobic Cardio</h3>
+            <p class="program-desc">Maximize your oxygen volume uptake (VO2 max) and enhance overall mitochondrial
+              efficiency.</p>
+            <a href="#contact" class="program-explore">Explore Pathway <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Card 3 (Yoga) -->
+        <div class="program-card reveal">
+          <img src="assets/yoga.png" alt="3D Yoga mat and flower">
+          <div class="program-overlay"></div>
+          <div class="program-content">
+            <span class="program-tag">Mindfulness & Flexibility</span>
+            <h3>Zen Yoga</h3>
+            <p class="program-desc">Calm nervous system pathways. Link deep breathing with static postures for optimized
+              mobility and muscle recovery.</p>
+            <a href="#contact" class="program-explore">Explore Pathway <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Card 4 (HIIT) - Wide Card -->
+        <div class="program-card program-card-wide reveal reveal-delay-1">
+          <img src="assets/hiit.png" alt="3D Stopwatch and battle ropes">
+          <div class="program-overlay"></div>
+          <div class="program-content">
+            <span class="program-tag">Anaerobic Conditioning</span>
+            <h3>HIIT Pathways</h3>
+            <p class="program-desc">Burn maximal calories in minimal durations. Activate post-exercise oxygen
+              consumption (afterburn) using high-exertion compound movements and short rest intervals.</p>
+            <a href="#contact" class="program-explore">Explore Pathway <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+
+        <!-- Card 5 (Home Workouts) -->
+        <div class="program-card reveal reveal-delay-2">
+          <img src="assets/home_workout.png" alt="3D Home exercise setup">
+          <div class="program-overlay"></div>
+          <div class="program-content">
+            <span class="program-tag">Minimalist Routines</span>
+            <h3>At-Home Vitality</h3>
+            <p class="program-desc">Elevate your fitness in the comfort of your living space. Calisthenics and band
+              setups requiring absolute zero heavy machinery.</p>
+            <a href="#contact" class="program-explore">Explore Pathway <i data-lucide="arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       6. BMI CALCULATOR SECTION
+       ========================================== -->
+  <section class="bmi" id="bmi">
+    <div class="container">
+      <div class="bmi-layout">
+        <div class="bmi-content reveal">
+          <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+            <span class="tag">Biometrics</span>
+            <h2>Calculate Your BMI</h2>
+          </div>
+          <p>Body Mass Index (BMI) is a starting indicator for assessing skeletal weight status. While it doesn't map
+            actual body fat percentages, it provides general categories to gauge metabolic mass balance.</p>
+
+          <div class="bmi-card" style="margin-top: 2rem;">
+            <div class="bmi-form">
+              <div class="bmi-input-group">
+                <label for="heightInput">Height</label>
+                <div class="bmi-input-wrapper">
+                  <input type="number" id="heightInput" value="175" min="100" max="250">
+                  <span class="bmi-unit">cm</span>
+                </div>
+              </div>
+
+              <div class="bmi-input-group">
+                <label for="weightInput">Weight</label>
+                <div class="bmi-input-wrapper">
+                  <input type="number" id="weightInput" value="70" min="30" max="200">
+                  <span class="bmi-unit">kg</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" id="calculateBmiBtn" style="width: 100%;">Calculate BMI</button>
+          </div>
+        </div>
+
+        <div class="bmi-result reveal reveal-delay-2">
+          <div class="bmi-output-panel">
+            <div class="bmi-gauge-box">
+              <div class="bmi-gauge-track"></div>
+              <div class="bmi-gauge-fill" id="bmiGaugeFill"></div>
+              <div class="bmi-gauge-needle" id="bmiGaugeNeedle"></div>
+              <div class="bmi-gauge-center"></div>
+            </div>
+
+            <div class="bmi-num-display" id="bmiVal">22.9</div>
+            <div class="bmi-status-badge" id="bmiStatus">Healthy Weight</div>
+            <p class="bmi-msg" id="bmiMessage">Your weight matches typical physiological guidelines. Maintain this
+              equilibrium with steady motion and organic nutrition.</p>
+
+            <!-- ===== AI PLAN SECTION ===== -->
+            <div id="aiPlanSection"
+              style="width:100%;margin-top:1.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem;">
+              <div
+                style="display:flex;width:100%;gap:0.75rem;background:rgba(250,249,246,0.04);border:1px solid rgba(230,197,148,0.2);border-radius:14px;padding:0.75rem 1rem;align-items:center;">
+                <i data-lucide="mail" style="color:var(--color-sand);flex-shrink:0;"></i>
+                <input type="email" id="aiPlanEmail" placeholder="Enter email to receive your AI plan 📧"
+                  style="flex:1;background:none;border:none;outline:none;color:#FAF9F6;font-size:0.9rem;font-family:'Inter',sans-serif;">
+              </div>
+              <button id="getAiPlanBtn" onclick="fetchAIPlan()"
+                style="width:100%;padding:1rem 2rem;background:linear-gradient(135deg,#E07A5F,#E6C594);border:none;border-radius:50px;color:#FAF9F6;font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.75rem;transition:all 0.3s ease;box-shadow:0 0 25px rgba(224,122,95,0.3);"
+                onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                <i data-lucide="cpu"></i> Get My AI Personalized Plan 🤖
+              </button>
+            </div>
+
+            <!-- AI RESULT BOX -->
+            <div id="aiResultBox"
+              style="display:none;width:100%;margin-top:1.5rem;background:rgba(17,40,30,0.9);border:1px solid rgba(230,197,148,0.3);border-radius:20px;padding:2rem;">
+              <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+                <div
+                  style="width:40px;height:40px;background:rgba(224,122,95,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                  <i data-lucide="bot" style="color:#E07A5F;"></i>
+                </div>
+                <span style="font-family:'Outfit',sans-serif;font-weight:700;font-size:1.05rem;color:#FAF9F6;">AURA AI
+                  Recommendation</span>
+              </div>
+              <div id="aiLoadingState" style="text-align:center;padding:1rem 0;">
+                <div
+                  style="width:40px;height:40px;border:3px solid rgba(230,197,148,0.1);border-top-color:#E6C594;border-radius:50%;animation:loaderSpin 1s linear infinite;margin:0 auto 1rem;">
+                </div>
+                <p style="color:#E6C594;font-size:0.9rem;opacity:0.8;">AI is analyzing your biometrics...</p>
+              </div>
+              <div id="aiResultContent" style="display:none;">
+                <div id="aiPlanText"
+                  style="font-size:0.95rem;line-height:1.8;color:#F4F1DE;opacity:0.9;white-space:pre-wrap;"></div>
+                <div id="aiEmailSentBadge"
+                  style="display:none;margin-top:1.25rem;padding:0.75rem 1.25rem;background:rgba(92,104,56,0.2);border:1px solid rgba(92,104,56,0.4);border-radius:12px;align-items:center;gap:0.75rem;font-size:0.85rem;color:#E6C594;">
+                  ✅ Plan also sent to your email! Check your inbox 📧
+                </div>
+              </div>
+            </div>
+
+            <div class="bmi-scale-markers">
+              <span>&lt; 18.5 Under</span>
+              <span>18.5 - 24.9 Normal</span>
+              <span>25 - 29.9 Over</span>
+              <span>30+ Obese</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       7. DIET & NUTRITION SECTION
+       ========================================== -->
+  <section class="diet" id="diet">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">Culinary Science</span>
+        <h2>Gastronomy & Micro-Nutrients</h2>
+        <p>Premium nutritional guidelines utilizing whole foods to maximize recovery, hormone levels, and daily
+          cognitive focus.</p>
+      </div>
+
+      <div class="diet-slider-container reveal">
+        <!-- Slider Arrows -->
+        <div class="slider-arrow arrow-left" id="prevSlide" aria-label="Previous slide">
+          <i data-lucide="chevron-left"></i>
+        </div>
+        <div class="slider-arrow arrow-right" id="nextSlide" aria-label="Next slide">
+          <i data-lucide="chevron-right"></i>
+        </div>
+
+        <div class="diet-wrapper" id="dietWrapper">
+          <!-- Slide 1 -->
+          <div class="diet-slide">
+            <div class="diet-visual">
+              <img src="assets/meal_plan.png" alt="3D Salmon Quinoa Salad Bowl" width="450">
+            </div>
+            <div class="diet-info">
+              <span class="diet-tag">Muscle Growth & Restoration</span>
+              <h3>Sovereign Salmon Bowl</h3>
+              <p class="diet-desc">Rich in essential Omega-3 fatty acids, clean cold-water salmon supports muscle cell
+                repair, reduces systematic inflammation, and bolsters cognitive sharpness. Paired with complex carbs
+                from red quinoa.</p>
+
+              <div class="diet-macros">
+                <div class="macro-box">
+                  <div class="macro-val">580</div>
+                  <div class="macro-lbl">Calories</div>
+                </div>
+                <div class="macro-box">
+                  <div class="macro-val">42g</div>
+                  <div class="macro-lbl">Protein</div>
+                </div>
+                <div class="macro-box">
+                  <div class="macro-val">48g</div>
+                  <div class="macro-lbl">Carbs</div>
+                </div>
+                <div class="macro-box">
+                  <div class="macro-val">22g</div>
+                  <div class="macro-lbl">Healthy Fats</div>
+                </div>
+              </div>
+
+              <ul class="diet-tips">
+                <li><i data-lucide="sparkles"></i> High bio-available trace minerals</li>
+                <li><i data-lucide="sparkles"></i> Encourages low systemic glycemic spikes</li>
+                <li><i data-lucide="sparkles"></i> Optimal pre-workout recovery fuel</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="diet-slide">
+            <div class="diet-visual">
+              <img src="assets/smoothie.png" alt="3D Green Smoothie Glass" width="450">
+            </div>
+            <div class="diet-info">
+              <span class="diet-tag">Cleansing & Rejuvenation</span>
+              <h3>Forest Detox Smoothie</h3>
+              <p class="diet-desc">Concentrated chlorophyll nutrients derived from organic baby kale, fresh cucumber,
+                cold-pressed green apple, and pure ginger roots. Ideal for digestive enzyme cleansing and metabolic
+                optimization.</p>
+
+              <div class="diet-macros">
+                <div class="macro-box">
+                  <div class="macro-val">210</div>
+                  <div class="macro-lbl">Calories</div>
+                </div>
+                <div class="macro-box">
+                  <div class="macro-val">6g</div>
+                  <div class="macro-lbl">Protein</div>
+                </div>
+                <div class="macro-box">
+                  <div class="macro-val">34g</div>
+                  <div class="macro-lbl">Carbs</div>
+                </div>
+                <div class="macro-box">
+                  <div class="macro-val">1g</div>
+                  <div class="macro-lbl">Healthy Fats</div>
+                </div>
+              </div>
+
+              <ul class="diet-tips">
+                <li><i data-lucide="sparkles"></i> High trace antioxidants (Vit C & K)</li>
+                <li><i data-lucide="sparkles"></i> Anti-inflammatory ginger gingerol compounds</li>
+                <li><i data-lucide="sparkles"></i> Accelerates gut biome hydration</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider Dots -->
+      <div class="slider-dots" id="sliderDots">
+        <div class="slider-dot active" data-index="0"></div>
+        <div class="slider-dot" data-index="1"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       8. FITNESS TRACKER DASHBOARD
+       ========================================== -->
+  <section class="tracker" id="tracker">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">Bio-Analytics</span>
+        <h2>Your Wellness Dashboard</h2>
+        <p>Log real-time daily metrics, track recovery targets, and visualize structural training trends.</p>
+      </div>
+
+      <div class="dashboard-layout">
+        <!-- Dashboard Widgets -->
+        <div class="dashboard-widgets reveal">
+          <!-- Widget Row 1 (Calorie Goal & Water Intake) -->
+          <div class="widget-row">
+            <div class="widget">
+              <div class="widget-header">
+                <span class="widget-title">Active Calorie Target</span>
+                <i data-lucide="zap" class="widget-icon" style="color: var(--color-orange);"></i>
+              </div>
+              <div class="calorie-box">
+                <div class="calorie-text">
+                  <span class="calorie-burn" id="dashboardCalorieBurn">650 / 900</span>
+                  <span class="water-goal">kcal burned today</span>
+                </div>
+                <div class="calorie-ring-wrapper">
+                  <svg class="calorie-svg-ring" width="90" height="90">
+                    <circle class="calorie-bg-circle" cx="45" cy="45" r="35"></circle>
+                    <circle class="calorie-active-circle" id="calorieCircle" cx="45" cy="45" r="35"></circle>
+                  </svg>
+                  <span class="calorie-ring-val" id="caloriePct">72%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="widget">
+              <div class="widget-header">
+                <span class="widget-title">Water Hydration</span>
+                <i data-lucide="droplet" class="widget-icon" style="color: #64B5F6;"></i>
+              </div>
+              <div class="water-display">
+                <div class="water-glass-container">
+                  <div class="water-fluid" id="waterFluid" style="height: 50%;"></div>
+                </div>
+                <div class="water-stats">
+                  <span class="water-qty" id="waterQty">1500 ml</span>
+                  <span class="water-goal">Goal: 3000 ml</span>
+                </div>
+              </div>
+              <div class="water-controls">
+                <button class="btn-circle" id="decreaseWaterBtn" aria-label="Decrease water"><i
+                    data-lucide="minus"></i></button>
+                <button class="btn-circle" id="increaseWaterBtn" aria-label="Increase water"
+                  style="background: var(--color-orange);"><i data-lucide="plus"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Widget Row 2 (Sleep Analysis) -->
+          <div class="widget">
+            <div class="widget-header">
+              <span class="widget-title">Sleep Cycle Recovery</span>
+              <i data-lucide="moon" class="widget-icon" style="color: var(--color-sand);"></i>
+            </div>
+            <div class="sleep-gauge">
+              <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                <span class="sleep-qty" id="sleepQty">7.5</span>
+                <span style="font-size: 1rem; opacity: 0.6;">hours / 8</span>
+              </div>
+              <div class="sleep-progress-bar">
+                <div class="sleep-fill" id="sleepProgressFill" style="width: 93.75%;"></div>
+              </div>
+              <span class="sleep-lbl" id="sleepRemark">Deep REM Recovery Completed. Excellent resting heart rate.</span>
+            </div>
+            <div class="water-controls" style="margin-top: 1.5rem; justify-content: flex-start;">
+              <button class="btn-circle" id="decreaseSleepBtn" aria-label="Decrease sleep"><i
+                  data-lucide="minus"></i></button>
+              <button class="btn-circle" id="increaseSleepBtn" aria-label="Increase sleep"
+                style="background: var(--color-orange);"><i data-lucide="plus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart Analytics Card -->
+        <div class="dashboard-chart-card reveal reveal-delay-2">
+          <div class="chart-header">
+            <h3 style="font-size: 1.25rem;">Weekly Calories Burned</h3>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <span class="legend-color legend-orange"></span>
+                <span>Active Target</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color legend-sand"></span>
+                <span>Daily Realized</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-container">
+            <canvas id="weeklyChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       9. TESTIMONIALS SECTION
+       ========================================== -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">Transformations</span>
+        <h2>Inner Circle Feedback</h2>
+        <p>A peek into the journeys of our distinguished community members who unlocked their complete physical
+          potential.</p>
+      </div>
+
+      <div class="testimonials-carousel reveal">
+        <div class="testimonials-wrapper" id="testimonialsWrapper">
+          <!-- Slide 1 -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">"AURA fundamentally transformed how I perceive fitness. It is no longer about
+              grinding myself down. The biological insights, tracking, and natural diets allowed me to reduce stress
+              while carving my best physique."</p>
+            <div class="testimonial-user">
+              <img src="assets/trainer1.png" alt="Aura Member Alexander" class="testimonial-avatar">
+              <span class="testimonial-name">Alexander Wright</span>
+              <span class="testimonial-role">Founder, Nexus Ventures</span>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">"The culinary suggestions are incredibly clean and delicious. I no longer
+              struggle with energy spikes in the afternoon. The combination of targeted strength circuits and yoga
+              restored my athletic focus."</p>
+            <div class="testimonial-user">
+              <img src="assets/trainer2.png" alt="Aura Member Elena" class="testimonial-avatar">
+              <span class="testimonial-name">Elena Rostova</span>
+              <span class="testimonial-role">Principal Designer, Studio Lux</span>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="testimonial-slide">
+            <p class="testimonial-quote">"Having an AI coaching mechanism that actively queries my stress and sets
+              tailored training thresholds helped me avoid overtraining. Highly recommend the Elite Plan."</p>
+            <div class="testimonial-user">
+              <img src="assets/trainer3.png" alt="Aura Member Marcus" class="testimonial-avatar">
+              <span class="testimonial-name">Marcus Sterling</span>
+              <span class="testimonial-role">Lead Architect, Arcos Group</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-dots" id="testimonialDots" style="margin-top: 3rem;">
+        <div class="slider-dot active" data-index="0"></div>
+        <div class="slider-dot" data-index="1"></div>
+        <div class="slider-dot" data-index="2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       10. TRAINERS SECTION
+       ========================================== -->
+  <section class="trainers" id="trainers">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">Expert Instructors</span>
+        <h2>Your Wellness Council</h2>
+        <p>A dedicated cohort of world-class bodybuilders, yoga specialists, and clinical nutritionists.</p>
+      </div>
+
+      <div class="trainers-grid">
+        <!-- Trainer 1 -->
+        <div class="trainer-card reveal">
+          <div class="trainer-img-box">
+            <img src="assets/trainer1.png" alt="Coach Julian Sterling">
+            <div class="trainer-social-overlay">
+              <a href="#" class="social-icon-btn" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+              <a href="#" class="social-icon-btn" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+              <a href="#" class="social-icon-btn" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            </div>
+          </div>
+          <div class="trainer-info">
+            <span class="trainer-role">Strength & Hypertrophy</span>
+            <h3>Julian Sterling</h3>
+            <p class="trainer-tagline">Former professional classic bodybuilder specializing in biomechanics.</p>
+          </div>
+        </div>
+
+        <!-- Trainer 2 -->
+        <div class="trainer-card reveal reveal-delay-1">
+          <div class="trainer-img-box">
+            <img src="assets/trainer2.png" alt="Coach Sophia Mercer">
+            <div class="trainer-social-overlay">
+              <a href="#" class="social-icon-btn" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+              <a href="#" class="social-icon-btn" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+              <a href="#" class="social-icon-btn" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            </div>
+          </div>
+          <div class="trainer-info">
+            <span class="trainer-role">Zen Mobility & Vinyasa</span>
+            <h3>Sophia Mercer</h3>
+            <p class="trainer-tagline">Certified yoga practitioner focused on postural correction and breathwork.</p>
+          </div>
+        </div>
+
+        <!-- Trainer 3 -->
+        <div class="trainer-card reveal reveal-delay-2">
+          <div class="trainer-img-box">
+            <img src="assets/trainer3.png" alt="Coach Damien Voss">
+            <div class="trainer-social-overlay">
+              <a href="#" class="social-icon-btn" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+              <a href="#" class="social-icon-btn" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+              <a href="#" class="social-icon-btn" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            </div>
+          </div>
+          <div class="trainer-info">
+            <span class="trainer-role">Nutrition & Bio-hacking</span>
+            <h3>Damien Voss</h3>
+            <p class="trainer-tagline">Biochemist and metabolic coach specializing in hormonal equilibrium.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       11. PRICING SECTION
+       ========================================== -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">Membership Tiers</span>
+        <h2>Select Your Commitment</h2>
+        <p>Unlock the ideal level of customization, biometrics, and coaching services.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Basic Plan -->
+        <div class="pricing-card reveal">
+          <span class="pricing-title">Basic Aura</span>
+          <div class="pricing-price">$49<span>/mo</span></div>
+          <div class="pricing-period">Billed monthly</div>
+
+          <ul class="pricing-features">
+            <li><i data-lucide="check"></i> <span>Access to digital standard plans</span></li>
+            <li><i data-lucide="check"></i> <span>Automated progress analytics</span></li>
+            <li><i data-lucide="check"></i> <span>Community support panels</span></li>
+            <li class="disabled"><i data-lucide="x"></i> <span>Individualized coaching hours</span></li>
+            <li class="disabled"><i data-lucide="x"></i> <span>Custom metabolic recipes</span></li>
+            <li class="disabled"><i data-lucide="x"></i> <span>Continuous telemetry sync</span></li>
+          </ul>
+
+          <a href="#contact" class="btn btn-secondary pricing-btn">Select Plan</a>
+        </div>
+
+        <!-- Pro Plan -->
+        <div class="pricing-card premium-glow reveal reveal-delay-1">
+          <div class="popular-badge">Most Popular</div>
+          <span class="pricing-title" style="color: var(--color-sand);">Pro Aura</span>
+          <div class="pricing-price">$89<span>/mo</span></div>
+          <div class="pricing-period">Billed monthly</div>
+
+          <ul class="pricing-features">
+            <li><i data-lucide="check"></i> <span>Access to all standard & elite plans</span></li>
+            <li><i data-lucide="check"></i> <span>Automated progress analytics</span></li>
+            <li><i data-lucide="check"></i> <span>Custom metabolic recipes</span></li>
+            <li><i data-lucide="check"></i> <span>AI fitness coach query feedback</span></li>
+            <li><i data-lucide="check"></i> <span>Monthly live coach reviews</span></li>
+            <li class="disabled"><i data-lucide="x"></i> <span>Continuous telemetry sync</span></li>
+          </ul>
+
+          <a href="#contact" class="btn btn-primary pricing-btn">Select Plan</a>
+        </div>
+
+        <!-- Elite Plan -->
+        <div class="pricing-card reveal reveal-delay-2">
+          <span class="pricing-title">Elite Aura</span>
+          <div class="pricing-price">$179<span>/mo</span></div>
+          <div class="pricing-period">Billed monthly</div>
+
+          <ul class="pricing-features">
+            <li><i data-lucide="check"></i> <span>All digital pathways unlocked</span></li>
+            <li><i data-lucide="check"></i> <span>Custom culinary meal plans</span></li>
+            <li><i data-lucide="check"></i> <span>Continuous telemetry integration</span></li>
+            <li><i data-lucide="check"></i> <span>Weekly live coach evaluation</span></li>
+            <li><i data-lucide="check"></i> <span>Priority 24/7 hotline feedback</span></li>
+            <li><i data-lucide="check"></i> <span>Genetic testing calibration</span></li>
+          </ul>
+
+          <a href="#contact" class="btn btn-secondary pricing-btn">Select Plan</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       12. FAQ (ACCORDION) SECTION
+       ========================================== -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="tag">Clarifications</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Quick answers to common questions about AURA programs, coaching, and subscriptions.</p>
+      </div>
+
+      <div class="faq-layout reveal">
+        <!-- Accordion 1 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How does the AI Fitness Coach gather biometric data?</span>
+            <i data-lucide="chevron-down" class="faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              AURA integrates with standard smartwatch APIs (including Apple Health, Google Fit, and Garmin). Once
+              synced, the system anonymously evaluates sleep variability, resting pulses, and daily energy outputs to
+              dynamically adapt your workouts.
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion 2 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Are the diet recommendations customizable for food allergies?</span>
+            <i data-lucide="chevron-down" class="faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Absolutely. Our culinary science backend allows you to toggle parameters like gluten-free, dairy-free,
+              vegetarian, keto, and common allergens. The system rebuilds the micronutrient macros automatically.
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion 3 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can I switch plans or cancel at any point?</span>
+            <i data-lucide="chevron-down" class="faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes, all AURA subscriptions run on a flexible month-to-month schedule. You can upgrade, downgrade, or
+              cancel your tier instantly from your account panel settings without any fees.
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion 4 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Is the Elite Plan suitable for absolute beginners?</span>
+            <i data-lucide="chevron-down" class="faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes, it is highly recommended. The Elite tier provides direct human oversight alongside daily data
+              reviews, ensuring beginners receive correct physiological advice, preventing potential injury or initial
+              fatigue.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       13. CONTACT SECTION
+       ========================================== -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Left Panel -->
+        <div class="contact-info-panel reveal">
+          <div>
+            <span class="tag"
+              style="text-transform: uppercase; font-size: 0.85rem; color: var(--color-sand); letter-spacing: 2px;">Inquiries</span>
+            <h3>Connect with AURA</h3>
+            <p>Ready to initiate your wellness transformation? Send us a brief message and our digital matching
+              assistant will link you with the correct tier.</p>
+          </div>
+
+          <div class="contact-details">
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">
+                <i data-lucide="phone"></i>
+              </div>
+              <div class="contact-detail-txt">
+                <h5>Call Us</h5>
+                <p>+1 (800) 555-AURA</p>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">
+                <i data-lucide="mail"></i>
+              </div>
+              <div class="contact-detail-txt">
+                <h5>Email Inquiries</h5>
+                <p>concierge@aura-wellness.com</p>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">
+                <i data-lucide="map-pin"></i>
+              </div>
+              <div class="contact-detail-txt">
+                <h5>HQ Location</h5>
+                <p>848 Emerald Coast Drive, CA 90210</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Embedded Map Placeholder -->
+          <div class="map-placeholder">
+            <i data-lucide="map" style="transform: scale(1.3);"></i>
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 0.95rem;">Interactive Map
+              Placeholder</span>
+            <span style="font-size: 0.75rem; opacity: 0.7;">848 Emerald Coast Drive</span>
+          </div>
+        </div>
+
+        <!-- Right Panel (Contact Form) -->
+        <div class="contact-form-panel reveal reveal-delay-2">
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group" id="nameGroup">
+                <label for="formName">Full Name</label>
+                <div class="form-input-wrapper">
+                  <i data-lucide="user"></i>
+                  <input type="text" id="formName" placeholder="E.g., Alexander Wright">
+                </div>
+                <span class="error-msg">Name is required (at least 3 characters)</span>
+              </div>
+
+              <div class="form-group" id="emailGroup">
+                <label for="formEmail">Email Address</label>
+                <div class="form-input-wrapper">
+                  <i data-lucide="mail"></i>
+                  <input type="email" id="formEmail" placeholder="E.g., alex@nexus.com">
+                </div>
+                <span class="error-msg">Please enter a valid email address</span>
+              </div>
+            </div>
+
+            <div class="form-group" id="planGroup">
+              <label for="formPlan">Interested Tier</label>
+              <div class="form-input-wrapper"
+                style="background: rgba(250, 249, 246, 0.04); border: 1px solid rgba(250, 249, 246, 0.08); border-radius: 14px;">
+                <i data-lucide="sliders" style="left: 1.25rem; z-index: 5;"></i>
+                <select id="formPlan"
+                  style="width: 100%; padding: 1.1rem 1.5rem 1.1rem 3.2rem; background: none; border: none; outline: none; color: var(--color-offwhite); cursor: pointer; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
+                  <option value="basic" style="background: var(--color-bg-panel); color: var(--color-beige);">Basic Aura
+                    Plan</option>
+                  <option value="pro" style="background: var(--color-bg-panel); color: var(--color-beige);" selected>Pro
+                    Aura Plan</option>
+                  <option value="elite" style="background: var(--color-bg-panel); color: var(--color-beige);">Elite Aura
+                    Plan</option>
+                </select>
+                <i data-lucide="chevron-down" style="left: auto; right: 1.25rem; pointer-events: none;"></i>
+              </div>
+            </div>
+
+            <div class="form-group" id="messageGroup">
+              <label for="formMessage">Message</label>
+              <textarea id="formMessage"
+                placeholder="Detail your training objectives, current biometrics, or question..."></textarea>
+              <span class="error-msg">Message is required (at least 15 characters)</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary submit-btn">Submit Request</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Toast -->
+  <div class="toast" id="successToast">
+    <i data-lucide="check-circle"></i>
+    <span>Message sent successfully! Aura concierge will call shortly.</span>
+  </div>
+
+  <!-- ==========================================
+       14. FOOTER
+       ========================================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col-about">
+          <a href="#hero" class="logo">
+            <i data-lucide="compass" class="logo-icon"></i>
+            AURA<span>.</span>
+          </a>
+          <p>Elevating daily human experience through clinical biology analysis, organic gourmet food preparation, and
+            state of the art progressive training. Reshape your reality.</p>
+          <div class="footer-social-links">
+            <a href="#" class="footer-social-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path
+                  d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zM18.4 6.2a1.12 1.12 0 1 0 0 2.24 1.12 1.12 0 0 0 0-2.24z"
+                  fill="#fff" />
+                <circle cx="12" cy="12" r="3.2" fill="#fff" />
+              </svg>
+            </a>
+            <a href="#" class="footer-social-btn" aria-label="Twitter">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path
+                  d="M22 5.92c-.64.28-1.32.46-2.04.55a3.56 3.56 0 0 0-6.07 2.58c0 .28.03.55.09.81A10.12 10.12 0 0 1 3.1 4.9a3.56 3.56 0 0 0 1.1 4.75c-.56 0-1.08-.17-1.54-.42v.04c0 1.75 1.24 3.22 2.88 3.56-.5.14-1.02.16-1.55.06.43 1.34 1.68 2.32 3.16 2.35A7.13 7.13 0 0 1 2 19.54 10.07 10.07 0 0 0 7.29 21c6.29 0 9.73-5.2 9.73-9.71v-.44c.66-.47 1.2-1.06 1.64-1.72-.6.27-1.24.46-1.9.54z"
+                  fill="#fff" />
+              </svg>
+            </a>
+            <a href="#" class="footer-social-btn" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path
+                  d="M23 7.2a3.01 3.01 0 0 0-2.12-2.13C19.3 4.6 12 4.6 12 4.6s-7.3 0-8.88.47A3.01 3.01 0 0 0 .99 7.2 31.2 31.2 0 0 0 .5 12a31.2 31.2 0 0 0 .49 4.8 3.01 3.01 0 0 0 2.13 2.13C4.7 19.4 12 19.4 12 19.4s7.3 0 8.88-.47A3.01 3.01 0 0 0 23 16.8 31.2 31.2 0 0 0 23.5 12a31.2 31.2 0 0 0-.5-4.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"
+                  fill="#fff" />
+              </svg>
+            </a>
+            <a href="#" class="footer-social-btn" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path
+                  d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5zM3 9h4v12H3zM9 9h3.6v1.6h.05c.5-.95 1.8-1.95 3.7-1.95 4 0 4.75 2.6 4.75 6V21h-4v-5.4c0-1.3 0-3-1.85-3s-2.15 1.45-2.15 2.9V21H9z"
+                  fill="#fff" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul class="footer-links-list">
+            <li><a href="#about">Our Creed</a></li>
+            <li><a href="#programs">Workout Pathways</a></li>
+            <li><a href="#diet">Culinary Macros</a></li>
+            <li><a href="#tracker">Dashboard Tracking</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul class="footer-links-list">
+            <li><a href="#faq">Clarifications (FAQ)</a></li>
+            <li><a href="#contact">Concierge Contact</a></li>
+            <li><a href="#pricing">Membership Details</a></li>
+            <li><a href="#">Privacy Protocol</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Vigour Bulletin</h4>
+          <div class="newsletter-form">
+            <p>Subscribe to our seasonal medical & muscle reports.</p>
+            <div class="newsletter-input-box">
+              <input type="email" id="vigourEmail" placeholder="E.g., alex@nexus.com" aria-label="Newsletter email">
+              <button class="newsletter-submit" aria-label="Subscribe" onclick="vigourSubscribe()"><i
+                  data-lucide="arrow-right"></i></button>
+            </div>
+            <p id="vigourMsg" style="color:#00ff88; margin-top:8px; font-size:13px; display:none;">
+              ✅ Subscribed! Check your email 🎉
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 AURA Wellness Inc. All rights reserved. Made with love for premium wellness.</p>
+        <ul class="footer-bottom-links">
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Biometric Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       JAVASCRIPT SYSTEMS CONTROLLER
+       ========================================== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      // Initialize Lucide Icons
+      lucide.createIcons();
+
+      // ==========================================
+      // LOADER ANIMATION
+      // ==========================================
+      const loader = document.getElementById("loader");
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          loader.classList.add("fade-out");
+        }, 1200); // 1.2s aesthetic display
+      });
+      // Safety fallback if load event already triggered
+      if (document.readyState === "complete") {
+        setTimeout(() => {
+          loader.classList.add("fade-out");
+        }, 1200);
+      }
+
+      // ==========================================
+      // STICKY HEADER & SCROLL-TOP BUTTON
+      // ==========================================
+      const header = document.getElementById("header");
+      const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+
+        if (window.scrollY > 500) {
+          scrollTopBtn.classList.add("show");
+        } else {
+          scrollTopBtn.classList.remove("show");
+        }
+      });
+
+      scrollTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // ==========================================
+      // MOBILE NAVIGATION HAMBURGER MENU
+      // ==========================================
+      const menuToggle = document.getElementById("menuToggle");
+      const navMenu = document.getElementById("nav");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        navMenu.classList.toggle("open");
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener("click", () => {
+          menuToggle.classList.remove("active");
+          navMenu.classList.remove("open");
+        });
+      });
+
+      // ==========================================
+      // HERO STATS COUNTER INCREMENT
+      // ==========================================
+      const animateCounter = (id, target, speed, isDecimal = false) => {
+        const elem = document.getElementById(id);
+        if (!elem) return;
+        let count = 0;
+        const increment = target / (speed / 16); // ~60fps target
+
+        const update = () => {
+          count += increment;
+          if (count >= target) {
+            elem.innerHTML = isDecimal ? target.toFixed(1) : Math.floor(target);
+          } else {
+            elem.innerHTML = isDecimal ? count.toFixed(1) : Math.floor(count);
+            requestAnimationFrame(update);
+          }
+        };
+        update();
+      };
+
+      // Execute stats counter on page load with slight delay
+      setTimeout(() => {
+        animateCounter("activeUsersVal", 18.4, 2000, true);
+        animateCounter("workoutHoursVal", 450, 2000, false);
+        animateCounter("caloriesBurnedVal", 92, 2000, false);
+      }, 1500);
+
+      // ==========================================
+      // BMI CALCULATOR CONTROLLER
+      // ==========================================
+      const calcBtn = document.getElementById("calculateBmiBtn");
+
+      const computeBMI = () => {
+        const height = parseFloat(document.getElementById("heightInput").value);
+        const weight = parseFloat(document.getElementById("weightInput").value);
+
+        if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
+          alert("Please input positive, non-zero biometric numbers.");
+          return;
+        }
+
+        // Formula: weight (kg) / [height (m)]^2
+        const heightMeters = height / 100;
+        const bmi = weight / (heightMeters * heightMeters);
+
+        // Update Displays
+        const bmiValDisplay = document.getElementById("bmiVal");
+        const bmiStatus = document.getElementById("bmiStatus");
+        const bmiMsg = document.getElementById("bmiMessage");
+        const needle = document.getElementById("bmiGaugeNeedle");
+        const gaugeFill = document.getElementById("bmiGaugeFill");
+
+        bmiValDisplay.textContent = bmi.toFixed(1);
+
+        // Determine Status & Range for Needle angle
+        // Needle range: -90deg (Underweight) to 90deg (Obese)
+        let status = "";
+        let message = "";
+        let needleAngle = -90; // default minimum
+        let fillProgressRotation = -135; // base gauge rotate value (-135 to 45)
+
+        if (bmi < 18.5) {
+          status = "Underweight";
+          message = "Mass index lies below basic physiological limits. Focus on clean protein macros and structured strength hyper-compensation.";
+          // Map BMI 15-18.5 to angle -90 to -45
+          const pct = Math.max(0, Math.min(1, (bmi - 14) / 4.5));
+          needleAngle = -90 + (pct * 45);
+        } else if (bmi >= 18.5 && bmi < 25) {
+          status = "Healthy Weight";
+          message = "Your weight matches typical physiological guidelines. Maintain this equilibrium with steady motion and organic nutrition.";
+          // Map BMI 18.5-25 to angle -45 to 0
+          const pct = (bmi - 18.5) / 6.5;
+          needleAngle = -45 + (pct * 45);
+        } else if (bmi >= 25 && bmi < 30) {
+          status = "Overweight Range";
+          message = "Vascular load increases slightly in this region. Integrate higher aerobic conditioning and strict caloric calorie targeting.";
+          // Map BMI 25-30 to angle 0 to 45
+          const pct = (bmi - 25) / 5;
+          needleAngle = 0 + (pct * 45);
+        } else {
+          status = "Obese Range";
+          message = "Heightened cardiac load risk detected. Consistent structural resistance drills and absolute sugar exclusion recommended.";
+          // Map BMI 30-38 to angle 45 to 90
+          const pct = Math.max(0, Math.min(1, (bmi - 30) / 8));
+          needleAngle = 45 + (pct * 45);
+        }
+
+        bmiStatus.textContent = status;
+        bmiMsg.textContent = message;
+
+        // Apply physical needle rotations
+        needle.style.transform = `rotate(${needleAngle}deg)`;
+
+        // Gauge Fill progress representation: rotate values
+        // Gauge Track starts at -135deg and covers 180deg (ends at 45deg)
+        // We calculate corresponding gauge fill rotation based on needle angle mapping
+        // Angle range is -90 to 90 (180deg sweep). Base fill rotation is needleAngle - 45.
+        gaugeFill.style.transform = `rotate(${needleAngle - 45}deg)`;
+      };
+
+      calcBtn.addEventListener("click", computeBMI);
+      // Run initial calculation on load
+      computeBMI();
+
+      // ==========================================
+      // DIET CAROUSEL / SLIDER
+      // ==========================================
+      const dietWrapper = document.getElementById("dietWrapper");
+      const prevSlide = document.getElementById("prevSlide");
+      const nextSlide = document.getElementById("nextSlide");
+      const sliderDots = document.querySelectorAll("#sliderDots .slider-dot");
+      let currentDietIndex = 0;
+      const totalDietSlides = 2;
+
+      const updateDietSlider = () => {
+        dietWrapper.style.transform = `translateX(-${currentDietIndex * 100}%)`;
+        sliderDots.forEach((dot, idx) => {
+          dot.classList.toggle("active", idx === currentDietIndex);
+        });
+      };
+
+      prevSlide.addEventListener("click", () => {
+        currentDietIndex = (currentDietIndex - 1 + totalDietSlides) % totalDietSlides;
+        updateDietSlider();
+      });
+
+      nextSlide.addEventListener("click", () => {
+        currentDietIndex = (currentDietIndex + 1) % totalDietSlides;
+        updateDietSlider();
+      });
+
+      sliderDots.forEach(dot => {
+        dot.addEventListener("click", (e) => {
+          currentDietIndex = parseInt(e.target.dataset.index);
+          updateDietSlider();
+        });
+      });
+
+      // ==========================================
+      // TESTIMONIALS CAROUSEL (AUTO SLIDE)
+      // ==========================================
+      const testimonialsWrapper = document.getElementById("testimonialsWrapper");
+      const testimonialDots = document.querySelectorAll("#testimonialDots .slider-dot");
+      let testimonialIndex = 0;
+      const totalTestimonials = 3;
+
+      const updateTestimonialSlider = () => {
+        testimonialsWrapper.style.transform = `translateX(-${testimonialIndex * 100}%)`;
+        testimonialDots.forEach((dot, idx) => {
+          dot.classList.toggle("active", idx === testimonialIndex);
+        });
+      };
+
+      testimonialDots.forEach(dot => {
+        dot.addEventListener("click", (e) => {
+          testimonialIndex = parseInt(e.target.dataset.index);
+          updateTestimonialSlider();
+        });
+      });
+
+      // Auto rotation
+      setInterval(() => {
+        testimonialIndex = (testimonialIndex + 1) % totalTestimonials;
+        updateTestimonialSlider();
+      }, 7000);
+
+      // ==========================================
+      // DASHBOARD INTERACTIVE WIDGET CONTROLLERS
+      // ==========================================
+
+      // 1. Water Intake
+      let currentWater = 1500; // ml
+      const waterQtyDisplay = document.getElementById("waterQty");
+      const waterFluid = document.getElementById("waterFluid");
+      const incWater = document.getElementById("increaseWaterBtn");
+      const decWater = document.getElementById("decreaseWaterBtn");
+
+      const updateWaterWidget = () => {
+        waterQtyDisplay.textContent = `${currentWater} ml`;
+        const percentage = Math.min(100, (currentWater / 3000) * 100);
+        waterFluid.style.height = `${percentage}%`;
+      };
+
+      incWater.addEventListener("click", () => {
+        if (currentWater < 5000) {
+          currentWater += 250;
+          updateWaterWidget();
+        }
+      });
+
+      decWater.addEventListener("click", () => {
+        if (currentWater >= 250) {
+          currentWater -= 250;
+          updateWaterWidget();
+        }
+      });
+
+      // 2. Sleep Cycle Tracker
+      let currentSleep = 7.5; // hours
+      const sleepQtyDisplay = document.getElementById("sleepQty");
+      const sleepProgressFill = document.getElementById("sleepProgressFill");
+      const sleepRemark = document.getElementById("sleepRemark");
+      const incSleep = document.getElementById("increaseSleepBtn");
+      const decSleep = document.getElementById("decreaseSleepBtn");
+
+      const updateSleepWidget = () => {
+        sleepQtyDisplay.textContent = currentSleep.toFixed(1);
+        const percentage = Math.min(100, (currentSleep / 8) * 100);
+        sleepProgressFill.style.width = `${percentage}%`;
+
+        if (currentSleep < 6) {
+          sleepRemark.textContent = "Insufficient sleep volume. Cellular rest recovery critically low.";
+          sleepRemark.style.color = "#E63946";
+        } else if (currentSleep >= 6 && currentSleep < 7.5) {
+          sleepRemark.textContent = "Moderate sleep recovery. Slight biological sleep debt remaining.";
+          sleepRemark.style.color = "var(--color-sand)";
+        } else {
+          sleepRemark.textContent = "Deep REM Recovery Completed. Excellent resting heart rate.";
+          sleepRemark.style.color = "var(--color-beige)";
+        }
+      };
+
+      incSleep.addEventListener("click", () => {
+        if (currentSleep < 12) {
+          currentSleep += 0.5;
+          updateSleepWidget();
+        }
+      });
+
+      decSleep.addEventListener("click", () => {
+        if (currentSleep >= 0.5) {
+          currentSleep -= 0.5;
+          updateSleepWidget();
+        }
+      });
+
+      // 3. Active Calorie Circle Updater
+      const updateCalorieGoal = (addVal) => {
+        const calBurnDisplay = document.getElementById("dashboardCalorieBurn");
+        const calPctDisplay = document.getElementById("caloriePct");
+        const calCircle = document.getElementById("calorieCircle");
+
+        let currentCal = 650 + addVal;
+        if (currentCal < 0) currentCal = 0;
+        if (currentCal > 1200) currentCal = 1200;
+
+        calBurnDisplay.textContent = `${currentCal} / 900`;
+        const percentage = Math.min(100, (currentCal / 900) * 100);
+        calPctDisplay.textContent = `${Math.floor(percentage)}%`;
+
+        // SVG circle stroke-dashoffset formula
+        // Full circle circumference = 2 * PI * r = 2 * 3.14159 * 35 = 220
+        // Offset mapping: 220 is empty (0%), 0 is full (100%)
+        const offset = 220 - (percentage / 100 * 220);
+        calCircle.style.strokeDashoffset = offset;
+      };
+
+      // Let's hook calorie change to user interaction elsewhere (e.g., clicking on stats)
+      const statCards = document.querySelectorAll(".stat-card");
+      statCards.forEach((card, idx) => {
+        card.addEventListener("click", () => {
+          // Increment calories burned by random val as a cute micro-interaction
+          const randomInc = Math.floor(Math.random() * 40) + 15;
+          updateCalorieGoal(randomInc);
+        });
+      });
+
+      // ==========================================
+      // CHARTJS ANALYSIS CREATION
+      // ==========================================
+      const ctx = document.getElementById("weeklyChart").getContext("2d");
+
+      // Gradients for lines
+      const gradientOrange = ctx.createLinearGradient(0, 0, 0, 300);
+      gradientOrange.addColorStop(0, "rgba(224, 122, 95, 0.4)");
+      gradientOrange.addColorStop(1, "rgba(224, 122, 95, 0.0)");
+
+      const gradientSand = ctx.createLinearGradient(0, 0, 0, 300);
+      gradientSand.addColorStop(0, "rgba(230, 197, 148, 0.3)");
+      gradientSand.addColorStop(1, "rgba(230, 197, 148, 0.0)");
+
+      const weeklyChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [
+            {
+              label: 'Realized Burn',
+              data: [720, 840, 680, 920, 890, 1100, 650],
+              borderColor: '#E07A5F',
+              backgroundColor: gradientOrange,
+              fill: true,
+              tension: 0.4,
+              borderWidth: 3,
+              pointBackgroundColor: '#E07A5F',
+              pointHoverRadius: 7
+            },
+            {
+              label: 'Active Target',
+              data: [900, 900, 900, 900, 900, 900, 900],
+              borderColor: '#E6C594',
+              backgroundColor: gradientSand,
+              borderDash: [5, 5],
+              fill: false,
+              tension: 0.1,
+              borderWidth: 1.5,
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false // Using our custom CSS legend instead
+            },
+            tooltip: {
+              backgroundColor: '#11281E',
+              titleFont: { family: 'Outfit', weight: 'bold' },
+              bodyFont: { family: 'Inter' },
+              borderColor: 'rgba(230, 197, 148, 0.2)',
+              borderWidth: 1,
+              displayColors: false,
+              padding: 12
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: '#FAF9F6',
+                font: { family: 'Inter', size: 11 },
+                opacity: 0.7
+              }
+            },
+            y: {
+              grid: {
+                color: 'rgba(250, 249, 246, 0.06)'
+              },
+              ticks: {
+                color: '#FAF9F6',
+                font: { family: 'Inter', size: 11 },
+                stepSize: 200,
+                opacity: 0.7
+              }
+            }
+          }
+        }
+      });
+
+      // ==========================================
+      // FAQ (ACCORDION) FUNCTIONALITY
+      // ==========================================
+      const faqItems = document.querySelectorAll(".faq-item");
+
+      faqItems.forEach(item => {
+        const question = item.querySelector(".faq-question");
+        const answer = item.querySelector(".faq-answer");
+
+        question.addEventListener("click", () => {
+          const isActive = item.classList.contains("active");
+
+          // Collapse all first for single-open accordions
+          faqItems.forEach(innerItem => {
+            innerItem.classList.remove("active");
+            innerItem.querySelector(".faq-answer").style.maxHeight = null;
+          });
+
+          if (!isActive) {
+            item.classList.add("active");
+            answer.style.maxHeight = answer.scrollHeight + "px";
+          }
+        });
+      });
+
+      // ==========================================
+      // CONTACT FORM REAL-TIME VALIDATION
+      // ==========================================
+      const contactForm = document.getElementById("contactForm");
+      const nameInput = document.getElementById("formName");
+      const emailInput = document.getElementById("formEmail");
+      const msgInput = document.getElementById("formMessage");
+
+      const nameGroup = document.getElementById("nameGroup");
+      const emailGroup = document.getElementById("emailGroup");
+      const msgGroup = document.getElementById("messageGroup");
+      const toast = document.getElementById("successToast");
+
+      const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+      };
+
+      const checkValidation = () => {
+        let isValid = true;
+
+        // Name
+        if (nameInput.value.trim().length < 3) {
+          nameGroup.classList.add("error");
+          isValid = false;
+        } else {
+          nameGroup.classList.remove("error");
+        }
+
+        // Email
+        if (!validateEmail(emailInput.value.trim())) {
+          emailGroup.classList.add("error");
+          isValid = false;
+        } else {
+          emailGroup.classList.remove("error");
+        }
+
+        // Message
+        if (msgInput.value.trim().length < 15) {
+          msgGroup.classList.add("error");
+          isValid = false;
+        } else {
+          msgGroup.classList.remove("error");
+        }
+
+        return isValid;
+      };
+
+      // Real-time input clear warnings on write
+      nameInput.addEventListener("input", () => {
+        if (nameInput.value.trim().length >= 3) nameGroup.classList.remove("error");
+      });
+      emailInput.addEventListener("input", () => {
+        if (validateEmail(emailInput.value.trim())) emailGroup.classList.remove("error");
+      });
+      msgInput.addEventListener("input", () => {
+        if (msgInput.value.trim().length >= 15) msgGroup.classList.remove("error");
+      });
+
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        if (checkValidation()) {
+          const formData = {
+            name: document.getElementById('formName').value,
+            email: document.getElementById('formEmail').value,
+            plan: document.getElementById('formPlan').value,
+            message: document.getElementById('formMessage').value
+          };
+
+          fetch('https://hook.us2.make.com/kpatzanz4ktg1jhsqrp5qrr3v0l9qi7f', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          });
+
+          // Success Feedback
+          toast.classList.add("show");
+          contactForm.reset();
+
+          // Force reset calorie active burn circle as code microinteraction reset
+          updateCalorieGoal(0);
+
+          setTimeout(() => {
+            toast.classList.remove("show");
+          }, 4000);
+        }
+      });
+
+      // ==========================================
+      // SCROLL REVEAL (INTERSECTION OBSERVER)
+      // ==========================================
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            // Stop observing once animated
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -50px 0px"
+      });
+
+      revealElements.forEach(elem => {
+        revealObserver.observe(elem);
+      });
+
+      // ==========================================
+      // BMI AI PLAN FEATURE
+      // ==========================================
+      window.fetchAIPlan = async function () {
+        const bmiValue = document.getElementById('bmiVal').textContent;
+        const bmiStatus = document.getElementById('bmiStatus').textContent;
+        const height = document.getElementById('heightInput').value;
+        const weight = document.getElementById('weightInput').value;
+        const userEmail = document.getElementById('aiPlanEmail').value.trim();
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(userEmail)) {
+          const emailInput = document.getElementById('aiPlanEmail');
+          emailInput.style.color = '#E63946';
+          emailInput.placeholder = '⚠️ Please enter a valid email first!';
+          setTimeout(() => {
+            emailInput.style.color = '#FAF9F6';
+            emailInput.placeholder = 'Enter email to receive your AI plan 📧';
+          }, 3000);
+          return;
+        }
+
+        const resultBox = document.getElementById('aiResultBox');
+        const loadingState = document.getElementById('aiLoadingState');
+        const resultContent = document.getElementById('aiResultContent');
+        const planText = document.getElementById('aiPlanText');
+        const emailBadge = document.getElementById('aiEmailSentBadge');
+        const btn = document.getElementById('getAiPlanBtn');
+
+        resultBox.style.display = 'block';
+        loadingState.style.display = 'block';
+        resultContent.style.display = 'none';
+        emailBadge.style.display = 'none';
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        btn.textContent = '⏳ Analyzing your biometrics...';
+        resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        try {
+          // const response = await fetch("https://api.anthropic.com/v1/messages", {
+          //   method: "POST",
+          //   headers: { "Content-Type": "application/json" },
+          //   body: JSON.stringify({
+          //     model: "claude-sonnet-4-20250514",
+          //     max_tokens: 1000,
+          //     messages: [{
+          //       role: "user",
+          //       content: `You are AURA Fitness AI coach. A user has calculated their BMI.\n\nUser Data:\n- Height: ${height} cm\n- Weight: ${weight} kg\n- BMI: ${bmiValue}\n- BMI Category: ${bmiStatus}\n\nGive them a personalized fitness plan in this EXACT format:\n\n🎯 YOUR AURA PLAN: [Recommend one of: Basic Aura ($49/mo), Pro Aura ($89/mo), or Elite Aura ($179/mo)]\n\n📊 YOUR BMI ANALYSIS:\n[2-3 sentences about their current BMI status in simple words]\n\n💪 RECOMMENDED WORKOUT:\n• [workout tip 1]\n• [workout tip 2]\n• [workout tip 3]\n\n🥗 NUTRITION ADVICE:\n• [nutrition tip 1]\n• [nutrition tip 2]\n• [nutrition tip 3]\n\n🏆 YOUR 30-DAY GOAL:\n[One clear achievable 30-day goal]\n\nKeep it friendly, motivating, and simple. Maximum 250 words.`
+          //     }]
+          //   })
+          // });
+
+          // const data = await response.json();
+          // const aiText = data.content[0].text;
+
+          // const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     "Authorization": "YOUR_GROQ_API_KEY"
+          //   },
+          //   body: JSON.stringify({
+          //     model: "llama3-8b-8192",
+          //     max_tokens: 1000,
+          //     messages: [{
+          //       role: "user",
+          //       content: `You are AURA Fitness AI coach.\n\nUser Data:\n- Height: ${height} cm\n- Weight: ${weight} kg\n- BMI: ${bmiValue}\n- BMI Category: ${bmiStatus}\n\nGive personalized plan:\n🎯 YOUR AURA PLAN: (Basic $49 / Pro $89 / Elite $179)\n📊 BMI ANALYSIS: (2-3 simple sentences)\n💪 RECOMMENDED WORKOUT:\n• tip 1\n• tip 2\n• tip 3\n🥗 NUTRITION ADVICE:\n• tip 1\n• tip 2\n• tip 3\n🏆 YOUR 30-DAY GOAL: (1 clear goal)\n\nMax 250 words. Be friendly and motivating!`
+          //     }]
+          //   })
+          // });
+
+          // const data = await response.json();
+          // const aiText = data.choices[0].message.content;
+
+          await fetch('https://hook.us2.make.com/mnfsegmn93ucklajextf6mbrps8k8mkg', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: userEmail,
+              bmi: bmiValue,
+              bmiStatus: bmiStatus,
+              height: height,
+              weight: weight
+            })
+          });
+
+          const aiText = `✅ Your AI Health Report has been sent to ${userEmail}!
+
+📧 Check your inbox now!
+
+Your BMI is ${bmiValue} - ${bmiStatus}
+Full diet and exercise plan has been emailed to you!`;
+
+          loadingState.style.display = 'none';
+          resultContent.style.display = 'block';
+          planText.textContent = aiText;
+
+          fetch('https://hook.us2.make.com/kpatzanz4ktg1jhsqrp5qrr3v0l9qi7f', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'bmi_ai_plan',
+              email: userEmail,
+              bmi: bmiValue,
+              bmiStatus: bmiStatus,
+              height: height,
+              weight: weight,
+              aiPlan: aiText
+            })
+          });
+
+          emailBadge.style.display = 'flex';
+
+        } catch (error) {
+          loadingState.style.display = 'none';
+          resultContent.style.display = 'block';
+          planText.textContent = '⚠️ AI service temporarily unavailable. Please try again.';
+        }
+
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.textContent = '🤖 Get My AI Personalized Plan';
+        lucide.createIcons();
+      }
+
+    });
+  </script>
+
+  <!-- Botpress live chat widget -->
+  <!-- <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/06/03/15/20260603154623-GYO5EDGR.js" defer></script> -->
+
+  <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/06/03/15/20260603154623-GYO5EDGR.js" defer></script>
+
+  <script>
+    function vigourSubscribe() {
+      const email = document.getElementById('vigourEmail').value;
+
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email! 📧');
+        return;
+      }
+
+      fetch('', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          name: 'AURA Member',
+          subscribed_at: new Date().toLocaleString()
+        })
+      })
+        .then(() => {
+          document.getElementById('vigourMsg').style.display = 'block';
+          document.getElementById('vigourEmail').value = '';
+        });
+    }
+  </script>
+
+</body>
+
+</html>
