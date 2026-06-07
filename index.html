@@ -3043,6 +3043,10 @@
                   style="display:none;margin-top:1.25rem;padding:0.75rem 1.25rem;background:rgba(92,104,56,0.2);border:1px solid rgba(92,104,56,0.4);border-radius:12px;align-items:center;gap:0.75rem;font-size:0.85rem;color:#E6C594;">
                   ✅ Plan also sent to your email! Check your inbox 📧
                 </div>
+                <button id="downloadPlanBtn" type="button"
+                  style="display:none;margin-top:1rem;width:100%;padding:0.9rem 1.5rem;background:rgba(224,122,95,0.15);border:1px solid rgba(224,122,95,0.35);border-radius:999px;color:#F4F1DE;font-family:'Outfit',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;transition:all 0.3s ease;">
+                  <i data-lucide="download-cloud"></i> Download Report PDF
+                </button>
               </div>
             </div>
 
@@ -3921,11 +3925,164 @@
         // We calculate corresponding gauge fill rotation based on needle angle mapping
         // Angle range is -90 to 90 (180deg sweep). Base fill rotation is needleAngle - 45.
         gaugeFill.style.transform = `rotate(${needleAngle - 45}deg)`;
+        return true;
       };
 
       calcBtn.addEventListener("click", computeBMI);
       // Run initial calculation on load
       computeBMI();
+
+      // ==========================================
+      // AI PLAN GENERATION FOR BMI
+      const getAiPlanBtn = document.getElementById("getAiPlanBtn");
+      const downloadPlanBtn = document.getElementById("downloadPlanBtn");
+      const aiResultBox = document.getElementById("aiResultBox");
+      const aiLoadingState = document.getElementById("aiLoadingState");
+      const aiResultContent = document.getElementById("aiResultContent");
+      const aiPlanText = document.getElementById("aiPlanText");
+      const aiEmailSentBadge = document.getElementById("aiEmailSentBadge");
+
+      const getCurrentEmail = () => document.getElementById("aiPlanEmail").value.trim();
+
+      const isValidEmail = (email) => {
+        return /^\S+@\S+\.\S+$/.test(email);
+      };
+
+      const buildAiPlan = (bmi, status, email) => {
+        const bmiValue = bmi.toFixed(1);
+        let movement = "Maintain a balanced approach with low-impact training, strengthening key movement patterns.";
+        let nutrition = "Focus on whole-food calories with quality proteins, healthy fats, and stable carb sources.";
+        let recovery = "Prioritize nightly sleep, daily mobility work, and gentle parasympathetic recovery to support adaptation.";
+
+        if (bmi < 18.5) {
+          movement = "Progressively add resistance training and total-body compound lifts to build lean mass and structural strength.";
+          nutrition = "Increase calorie density with nutrient-rich smoothies, lean proteins, complex carbs, and strategic healthy fats.";
+          recovery = "Use frequent micro-recovery breaks, quality sleep, and consistent hydration to support muscle growth.";
+        } else if (bmi >= 25 && bmi < 30) {
+          movement = "Blend moderate aerobic conditioning with strength circuits to maintain muscle while reducing excess fat mass.";
+          nutrition = "Trim refined sugars, maintain lean protein intake, and use fiber-rich vegetables to support metabolic balance.";
+          recovery = "Implement active recovery days and evening wind-down routines to keep cortisol stable while preserving energy.";
+        } else if (bmi >= 30) {
+          movement = "Focus on safe, low-impact movement and progressive resistance to protect joints while burning stored energy.";
+          nutrition = "Adopt strict portion control with lean protein, green vegetables, and zero added sugars to restore metabolic health.";
+          recovery = "Sleep consistency and calming evening rituals are essential to reset hormones and reduce systemic inflammation.";
+        }
+
+        const personalizedEmail = email ? `Plan prepared for: ${email}` : "Plan generated for your current biometric profile.";
+
+        return `AURA AI Wellness Report\n\n` +
+          `BMI Snapshot: ${bmiValue}\n` +
+          `Category: ${status}\n\n` +
+          `Movement Recommendation:\n` +
+          `- ${movement}\n\n` +
+          `Nutrition Recommendation:\n` +
+          `- ${nutrition}\n\n` +
+          `Recovery Recommendation:\n` +
+          `- ${recovery}\n\n` +
+          `${personalizedEmail}\n\n` +
+          `Start with this guidance for the next 4 weeks, then reassess your BMI and functional output. Keep your plan consistent and track how your body responds.`;
+      };
+
+      const formatPdfText = (text) => {
+        return text.replace(/\r/g, "");
+      };
+
+      const escapePdfString = (text) => {
+        return text.replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+      };
+
+      const createPdfBlob = (text) => {
+        const encoder = new TextEncoder();
+        const lines = formatPdfText(text).split("\n");
+        const contentOps = ["BT", "/F1 12 Tf", "40 760 Td"];
+        lines.forEach((line, index) => {
+          contentOps.push(`(${escapePdfString(line)}) Tj`);
+          if (index < lines.length - 1) {
+            contentOps.push("0 -16 Td");
+          }
+        });
+        contentOps.push("ET");
+        const contentText = contentOps.join("\n");
+        const contentBytes = encoder.encode(contentText);
+
+        const objects = [
+          "%PDF-1.3",
+          "1 0 obj<< /Type /Catalog /Pages 2 0 R>>endobj",
+          "2 0 obj<< /Type /Pages /Kids [3 0 R] /Count 1>>endobj",
+          "3 0 obj<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R>> >> /Contents 5 0 R>>endobj",
+          "4 0 obj<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica>>endobj",
+          `5 0 obj<< /Length ${contentBytes.length} >>stream\n${contentText}\nendstream endobj`
+        ];
+
+        let offset = 0;
+        const positions = [];
+        const encodedParts = objects.map((obj) => {
+          positions.push(offset);
+          const bytes = encoder.encode(obj + "\n");
+          offset += bytes.length;
+          return bytes;
+        });
+
+        const xrefLines = ["xref", `0 ${objects.length + 1}`, "0000000000 65535 f "];
+        positions.forEach((pos) => {
+          xrefLines.push(String(pos).padStart(10, "0") + " 00000 n ");
+        });
+
+        const trailer = [`trailer<< /Size ${objects.length + 1} /Root 1 0 R>>`, "startxref", String(offset), "%%EOF"].join("\n");
+        const finalParts = [...encodedParts, encoder.encode(xrefLines.join("\n") + "\n" + trailer)];
+        return new Blob(finalParts, { type: "application/pdf" });
+      };
+
+      const downloadPdfReport = () => {
+        const email = getCurrentEmail();
+        const bmiValue = parseFloat(document.getElementById("bmiVal").textContent) || 0;
+        const status = document.getElementById("bmiStatus").textContent || "Current BMI";
+        const reportText = buildAiPlan(bmiValue, status, email);
+        const pdfBlob = createPdfBlob(reportText);
+        const downloadAnchor = document.createElement("a");
+        downloadAnchor.href = URL.createObjectURL(pdfBlob);
+        downloadAnchor.download = "AURA_AI_BMI_Report.pdf";
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        document.body.removeChild(downloadAnchor);
+      };
+
+      const showAiReport = (text, email) => {
+        aiPlanText.textContent = text;
+        aiEmailSentBadge.style.display = email ? "flex" : "none";
+        aiResultBox.style.display = "block";
+        aiLoadingState.style.display = "none";
+        aiResultContent.style.display = "block";
+        downloadPlanBtn.style.display = "inline-flex";
+      };
+
+      const generateAiPlan = () => {
+        const email = getCurrentEmail();
+        if (!email || !isValidEmail(email)) {
+          alert("Please enter a valid email address to generate your AI plan.");
+          return;
+        }
+
+        if (!computeBMI()) {
+          return;
+        }
+
+        aiResultBox.style.display = "block";
+        aiLoadingState.style.display = "block";
+        aiResultContent.style.display = "none";
+        downloadPlanBtn.style.display = "none";
+
+        const bmiValue = parseFloat(document.getElementById("bmiVal").textContent) || 0;
+        const status = document.getElementById("bmiStatus").textContent || "Healthy Weight";
+
+        setTimeout(() => {
+          const report = buildAiPlan(bmiValue, status, email);
+          showAiReport(report, email);
+        }, 900);
+      };
+
+      getAiPlanBtn.addEventListener("click", generateAiPlan);
+      downloadPlanBtn.addEventListener("click", downloadPdfReport);
 
       // ==========================================
       // DIET CAROUSEL / SLIDER
